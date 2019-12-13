@@ -28,15 +28,15 @@ namespace BackstageManagement
             var builder = new ContainerBuilder();
             builder.RegisterControllers(typeof(MvcApplication).Assembly).PropertiesAutowired();
             var basepath = AppDomain.CurrentDomain.RelativeSearchPath;
-            
-            builder.Register<ISqlSugarClient>(c => {
-                return new SqlSugarClient(new ConnectionConfig {
-                    ConnectionString = "server=47.104.252.6;uid=zh;pwd=qwe123;database=backstagemanagement",//ConfigurationManager.ConnectionStrings["conn"].ToString(),
-                    DbType = DbType.MySql,
-                    InitKeyType = InitKeyType.Attribute,
-                    IsAutoCloseConnection = true,
-                });
-            });
+
+            builder.Register<ISqlSugarClient>(c => new SqlSugarClient(new ConnectionConfig
+            {
+                ConnectionString = "server=47.104.252.6;uid=zh;pwd=qwe123;database=backstagemanagement",//ConfigurationManager.ConnectionStrings["conn"].ToString(),
+                DbType = DbType.MySql,
+                InitKeyType = InitKeyType.Attribute,
+                IsAutoCloseConnection = true,
+            }));
+
 
             var repositoryDllFile = Path.Combine(basepath, "BackstageManagement.Repository.dll");
             var assemblysRepository = Assembly.LoadFrom(repositoryDllFile);
@@ -49,13 +49,9 @@ namespace BackstageManagement
             var container = builder.Build();
             DependencyResolver.SetResolver(new AutofacDependencyResolver(container));
         }
-        protected void Application_Error() {
+        protected void Application_Error()
+        {
 
-            var error = Server.GetLastError();
-            if (error != null) {
-                //BackstageManagement.Services.LogServices logServices = new BackstageManagement.Services.LogServices(new BackstageManagement.ir);
-                /*  await logServices.WriteExceptionLog(LoginUser.Id, "登录", ex.ToString());*/
-            }
         }
 
     }
