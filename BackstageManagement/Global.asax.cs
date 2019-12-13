@@ -50,7 +50,12 @@ namespace BackstageManagement
             DependencyResolver.SetResolver(new AutofacDependencyResolver(container));
         }
         protected void Application_Error() {
-           
+
+            var error = Server.GetLastError();
+            if (error != null) {
+                //BackstageManagement.Services.LogServices logServices = new BackstageManagement.Services.LogServices(new BackstageManagement.ir);
+                /*  await logServices.WriteExceptionLog(LoginUser.Id, "登录", ex.ToString());*/
+            }
         }
 
     }
