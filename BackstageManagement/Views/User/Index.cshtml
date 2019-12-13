@@ -1,0 +1,85 @@
+﻿
+<div class="layui-card">
+    <div class="layui-card-header">
+        员工信息管理
+    </div>
+    <div class="layui-card-body">
+        <div class="layui-row" style="text-align:left">
+            <button class="layui-btn" id="btnAddUser">
+                <i class="layui-icon layui-icon-add-circle"></i>
+                添加
+            </button>
+            <button class="layui-btn" id="btnRefresh">
+                <i class="layui-icon layui-icon-refresh"></i>
+                刷新
+            </button>
+        </div>
+        <table class="layui-hide" id="usertable" lay-filter="usertable"></table>
+    </div>
+</div>
+
+
+
+@section head{
+    <script type="text/html" id="operationTpl">
+        <div>
+            <a class="layui-btn layui-btn-xs" lay-event="edit">
+                <i class="layui-icon layui-icon-edit"></i>编辑
+            </a>
+            <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="delete">
+                <i class="layui-icon layui-icon-delete"></i>删除
+            </a>
+        </div>
+    </script>
+    <script type="text/html" id="addUser">
+        <div style="margin:15px 30px 15px 0px">
+            <form class="layui-form">
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">工号</label>
+                        <div class="layui-input-inline">
+                            <input type="text" id="loginNo" required lay-verify="required" placeholder="请输入工号" class="layui-input" />
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="layui-form-label">姓名</label>
+                        <div class="layui-input-inline">
+                            <input type="text" id="loginName" required lay-verify="required" placeholder="请输入姓名" class="layui-input" />
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">员工类型</label>
+                        <div class="layui-input-inline">
+                            <select id="employeeType" lay-filter="usertype">
+                                @*<option value="">请选择员工类型</option>*@
+                                <option value="1">管理人员</option>
+                                <option value="2">测试人员</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="layui-inline" id="psd">
+                        <label class="layui-form-label">密码</label>
+                        <div class="layui-input-inline">
+                            <input id="password" type="password" required lay-verify="required" placeholder="请输入密码" class="layui-input" />
+                        </div>
+                    </div>
+                    
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">备注</label>
+                    <div class="layui-input-block">
+                        <input id="remark" type="text" placeholder="请输入备注" class="layui-input" />
+                    </div>
+                </div>
+
+            </form>
+        </div>
+
+    </script>
+    <script type="text/javascript" src="../Scripts/user.js">
+    </script>
+}
+

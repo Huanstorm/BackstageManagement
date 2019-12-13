@@ -1,0 +1,28 @@
+﻿<div class="row layui-col-md12 layui-col-space30">
+    <div class="layui-col-md3">
+        <div class="layui-card">
+            <div class="layui-card-header">
+                用户列表
+            </div>
+            <div class="layui-card-body">
+                <table class="layui-hide" id="user" lay-filter="user"></table>
+            </div>
+        </div>
+    </div>
+    <div class="layui-col-md9">
+        <div class="layui-card">
+            <div class="layui-card-header">
+                权限列表
+                <button class="layui-btn layui-btn-sm layui-button-tips" id="btnSave" type="button">保存</button>
+            </div>
+            <div class="layui-card-body">
+                <div id="tree"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section head{
+    <script type="text/javascript" src="../Scripts/user_permission.js"></script>
+}
+

@@ -1,0 +1,92 @@
+﻿html {
+    background-color: #f2f2f2;
+    color:#303133;
+}
+
+.layui-header {
+    height:50px;
+    left:0px;
+    top:0px;
+    position:fixed;
+    width:100%;
+}
+
+.layui-layout-admin .layui-header {
+    background-color:#ffffff;
+
+}
+
+.layui-layout-admin .layui-side {
+    width:220px;
+    top:0;
+    z-index:1003;
+}
+.layui-side-menu .layui-side-scroll {
+    width:240px;
+}
+.layui-side-menu {
+    background-color:#20222A !important;
+    color:#fff;
+    box-shadow:1px 0 2px 0 rgba(0,0,0,.05)
+}
+.layui-side-menu .layui-nav {
+    width:220px;
+    margin-top:50px;
+    background:0 0;
+}
+.layui-layout-admin .layui-logo {
+    position:fixed;
+    left:0;
+    top:0;
+    z-index:1002;
+    width:220px;
+    height:49px;
+    box-sizing:border-box;
+    line-height:50px;
+}
+.layui-layout-admin .layui-body {
+    position:fixed;
+    bottom:0;
+    left:220px;
+    top:50px;
+}
+.layui-fluid {
+    padding:15px;
+}
+.layui-card {
+    height:100%;
+}
+
+.layui-layout-admin .layui-header .layui-nav .layui-nav-item {
+    height:50px;
+    line-height:50px;
+}
+
+.layui-layout-admin .layui-header a{
+    color:#303133;
+}
+.layui-layout-admin .layui-header a:hover {
+    color: #000000;
+}
+.layui-layout-admin .layui-header .layui-nav .layui-nav-more {
+    border-top-color:#666;
+}
+.layui-layout-admin .layui-header .layui-nav .layui-nav-mored {
+    border-color: transparent transparent #666
+}
+.layui-nav-child {
+    top:53px;
+}
+.layui-nav-tree .layui-nav-child dd.layui-this, .layui-nav-tree .layui-nav-child dd.layui-this a, .layui-nav-tree .layui-this, .layui-nav-tree .layui-this > a, .layui-nav-tree .layui-this > a:hover {
+    background-color: #AA3130 !important;
+}
+.layui-card-body h1 {
+    font-size:35px;
+    line-height:50px;
+}
+.layui-card-header .layui-button-tips {
+    position: absolute;
+    right: 15px;
+    top:6px;
+    
+}

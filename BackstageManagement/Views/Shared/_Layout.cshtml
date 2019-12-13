@@ -1,0 +1,85 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>后台管理系统</title>
+    @Styles.Render("~/Content/css")
+    <link href="~/Content/admin.css" rel="stylesheet"/>
+    <link href="~/Content/nprogress.css" rel="stylesheet"/>
+</head>
+<body class="layui-layout-body">
+    <div class="layui-layout layui-layout-admin">
+        <div class="layui-header">
+            <div class="layui-main">
+                @*<ul class="layui-nav" style="position: fixed; left: 220px;">
+                    <li class="layui-nav-item">
+                        <a href="javascript:;">
+                            <i class="layui-icon layui-icon-shrink-right"></i>
+                        </a>
+                    </li>
+                </ul>*@
+                <ul class="layui-nav" style="position: fixed; top: 0; right: 0; background: none;" lay-filter="nav-top">
+                    <li class="layui-nav-item">
+                        <a href="javascript:;">
+                            @ViewBag.UserName
+                        </a>
+                        <dl class="layui-nav-child">
+                            <dd><a href="javascript:;">退出</a></dd>
+                        </dl>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="layui-side layui-side-menu ">
+            <div class="layui-side-scroll">
+                <div class="layui-logo">
+                    <img src="~/Images/Topyoung.png" style="width:180px;"/>
+                </div>
+                <ul class="layui-nav layui-nav-tree" lay-filter="navSlide">
+                    @Html.Raw(ViewBag.MenuItems)
+                </ul>
+            </div>
+        </div>
+        <div class="layui-body">
+            <div class="layui-fluid">
+                @RenderBody()
+                @RenderSection("content",false)
+            </div>
+        </div>
+        @*<div class="layui-footer" style="text-align:center;line-height:44px">
+            Copyright &copy; 2019  <a href="http://www.topyong.com.cn" target="_blank">topyoung.com.cn</a>
+        </div>*@
+    </div>
+    @*@Scripts.Render("~/bundles/layui")*@
+    <script type="text/javascript" src="/layui/layui.js"></script>
+    <script type="text/javascript" src="~/Scripts/nprogress.js"></script>
+    <script>
+        layui.use(['form', 'layer', 'element', 'jquery'], function () {
+            var form = layui.form, layer = layui.layer, element = layui.element, $ = layui.jquery;
+            element.on('nav(nav-top)', function (elem) {
+                var title = elem.text();
+                if (title == "退出") {
+                    layer.confirm('确定要退出吗？', function (index) {
+                        $.ajax({
+                            url: "/User/Exit",
+                            type: 'post',
+                            success: function (res) {
+                                if (res.code == 0) {
+                                    location.href = res.redirect;
+                                }
+                            }
+                        })
+                    }, function () {
+
+                    });
+
+                }
+            });
+        });
+    </script>
+    @RenderSection("head", false);
+</body>
+
+</html>

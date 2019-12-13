@@ -1,0 +1,61 @@
+﻿<div class="layui-card">
+    <div class="layui-card-header">
+        配置信息管理
+    </div>
+    <div class="layui-card-body">
+        <div class="row">
+            <button class="layui-btn" id="btnAddInfoConfig">
+                <i class="layui-icon layui-icon-add-circle"></i>
+            </button>
+        </div>
+        <table class="layui-hide" id="infoConfigtable" lay-filter="infoConfigtable"></table>
+    </div>
+</div>
+
+@section head{
+    <script type="text/html" id="operationTpl">
+        <div>
+            <a class="layui-btn layui-btn-xs" lay-event="edit">
+                <i class="layui-icon layui-icon-edit"></i>编辑
+            </a>
+            <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="delete">
+                <i class="layui-icon layui-icon-delete"></i>删除
+            </a>
+        </div>
+    </script>
+    <script type="text/html" id="addInfoConfig">
+    <div style="margin-top:15px">
+        <form class="layui-form">
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">Key</label>
+                    <div class="layui-input-inline">
+                        <input type="text" id="keyName" required lay-verify="required" placeholder="输入Key值" class="layui-input" />
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">Value</label>
+                    <div class="layui-input-inline">
+                        <input type="text" id="value" required lay-verify="required" placeholder="输入Value值" class="layui-input" />
+                    </div>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">描述</label>
+                    <div class="layui-input-inline">
+                        <input type="text" id="description" placeholder="输入描述" class="layui-input" />
+                    </div>
+                </div>
+            </div>
+
+        </form>
+    </div>
+
+</script>
+<script type="text/javascript" src="../Scripts/InfoConfig.js">
+
+
+
+</script>
+}

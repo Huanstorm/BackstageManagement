@@ -1,0 +1,66 @@
+﻿@{
+    Layout = null;
+    ViewBag.Title = ViewBag.Title;
+}
+
+
+<html>
+<head>
+    <title>后台管理系统</title>
+    <link href="../layui/css/layui.css" rel="stylesheet" />
+    <link href="../Content/Login.css" rel="stylesheet" />
+</head>
+<body class="login-bg">
+    <div class="login layui-anim layui-anim-up">
+        <div class="message">后台管理系统</div>
+        <div id="darkbannerwrap"></div>
+
+        <form method="post" class="layui-form">
+            <input id="name" placeholder="工号" type="text" lay-verify="required" class="layui-input" />
+            <hr class="hr15">
+            <input id="password" lay-verify="required" placeholder="密码" type="password" class="layui-input" />
+            <hr class="hr15">
+            <input id="login"  lay-submit value="登 录" lay-filter="login" style="width: 100%;" type="button"/>
+            <hr class="hr20">
+        </form>
+    </div>
+    <script type="text/javascript" src="../layui/layui.js"></script>
+    <script>
+        layui.use(['form', 'jquery', 'layer'], function () {
+            var form = layui.form;
+            var $ = layui.jquery;
+            var layer = layui.layer;
+            $("#name").focus();
+            $(document).keydown(function (event) {
+                if (event.keyCode == 13) {
+                    document.getElementById("login").click();
+                }
+            })
+            $("#login").click(function () {
+                form.on('submit(login)', function () {
+                    var name = $("#name").val();
+                    var password = $("#password").val();
+                    $.ajax({
+                        url: '/Login/Login',
+                        type: 'post',
+                        data: {
+                            userName: name,
+                            password: password
+                        },
+                        success: function (res) {
+                            if (res.code == 0) {
+                                location.href = "/Home/Index";
+                            }
+                            else {
+                                layer.msg("登录失败。");
+                            }
+                        },
+                        error: function (res) {
+                        }
+                    })
+                })
+            })
+        })
+    </script>
+</body>
+</html>

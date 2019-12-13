@@ -1,0 +1,387 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{BCDB3665-118C-4CC9-9A57-FB09D04282F7}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>BackstageManagement</RootNamespace>
+    <AssemblyName>BackstageManagement</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <MvcBuildViews>false</MvcBuildViews>
+    <UseIISExpress>true</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <UseGlobalApplicationHostFile />
+    <TargetFrameworkProfile />
+    <Use64BitIISExpress />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Autofac, Version=4.0.1.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <HintPath>..\packages\Autofac.4.0.1\lib\net45\Autofac.dll</HintPath>
+    </Reference>
+    <Reference Include="Autofac.Integration.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <HintPath>..\packages\Autofac.Mvc5.4.0.2\lib\net45\Autofac.Integration.Mvc.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.5.0.0\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="log4net, Version=2.0.8.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>DLL\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="MySql.Data, Version=6.7.9.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <HintPath>..\packages\MySql.Data.6.7.9\lib\net45\MySql.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="SqlSugar, Version=5.0.0.10, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>DLL\SqlSugar.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.3\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.3\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http">
+    </Reference>
+    <Reference Include="System.Net.Http.WebRequest">
+    </Reference>
+    <Reference Include="System.Web.Optimization">
+      <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.1.1\lib\net40\System.Web.Optimization.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <Private>True</Private>
+      <HintPath>..\packages\Newtonsoft.Json.5.0.6\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="WebGrease">
+      <Private>True</Private>
+      <HintPath>..\packages\WebGrease.1.5.2\lib\WebGrease.dll</HintPath>
+    </Reference>
+    <Reference Include="Antlr3.Runtime">
+      <Private>True</Private>
+      <HintPath>..\packages\Antlr.3.4.1.9004\lib\Antlr3.Runtime.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+    <Folder Include="Models\" />
+    <Folder Include="Views\Home\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\ErrorHandlerController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\InfoConfigController.cs" />
+    <Compile Include="Controllers\LogController.cs" />
+    <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\PermissionController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="Controllers\User_PermissionController.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="FilterAttribute\MyActionFilterAttribute.cs" />
+    <Compile Include="FilterAttribute\MyAuthorizaAttribute.cs" />
+    <Compile Include="FilterAttribute\MyExceptionFilterAttribute.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\Login.css" />
+    <Content Include="Content\nprogress.css" />
+    <Content Include="DLL\Autofac.dll" />
+    <Content Include="DLL\Autofac.Integration.Mvc.dll" />
+    <Content Include="DLL\log4net.dll" />
+    <Content Include="DLL\Microsoft.DotNet.PlatformAbstractions.dll" />
+    <Content Include="DLL\Newtonsoft.Json.dll" />
+    <Content Include="DLL\SqlSugar.dll" />
+    <Content Include="favicon.ico" />
+    <Content Include="font\glyphicons-halflings-regular.svg" />
+    <Content Include="font\iconfont.svg" />
+    <Content Include="Global.asax" />
+    <Content Include="Content\admin.css" />
+    <Content Include="HtmlPage.html" />
+    <Content Include="Images\aiwrap.png" />
+    <Content Include="Images\bg.png" />
+    <Content Include="Images\Topyoung.jpg" />
+    <Content Include="Images\Topyoung.png" />
+    <Content Include="Images\Topyoung2.PNG" />
+    <Content Include="Scripts\nprogress.js" />
+    <Content Include="Scripts\UNTLogScript.js" />
+    <Content Include="Scripts\log.js" />
+    <Content Include="Scripts\permission.js" />
+    <Content Include="Scripts\UNTScript.js" />
+    <Content Include="Scripts\user.js" />
+    <Content Include="Scripts\InfoConfig.js" />
+    <Content Include="Scripts\ToolingInfo.js" />
+    <Content Include="Scripts\user_permission.js" />
+    <Content Include="Scripts\workbench.js" />
+    <Content Include="Scripts\WorkStation.js" />
+    <Content Include="font\iconfont.eot" />
+    <Content Include="font\iconfont.ttf" />
+    <Content Include="font\iconfont.woff" />
+    <Content Include="layui\font\iconfont.eot" />
+    <Content Include="layui\font\iconfont.ttf" />
+    <Content Include="layui\font\iconfont.woff" />
+    <Content Include="layui\font\iconfont.woff2" />
+    <None Include="Properties\PublishProfiles\BackstageManagement.pubxml" />
+    <Content Include="layui\css\layui.css" />
+    <Content Include="layui\css\layui.mobile.css" />
+    <Content Include="layui\css\modules\code.css" />
+    <Content Include="layui\css\modules\laydate\default\laydate.css" />
+    <Content Include="layui\css\modules\layer\default\icon-ext.png" />
+    <Content Include="layui\css\modules\layer\default\icon.png" />
+    <Content Include="layui\css\modules\layer\default\layer.css" />
+    <Content Include="layui\css\modules\layer\default\loading-0.gif" />
+    <Content Include="layui\css\modules\layer\default\loading-1.gif" />
+    <Content Include="layui\css\modules\layer\default\loading-2.gif" />
+    <Content Include="layui\font\iconfont.svg" />
+    <Content Include="layui\images\face\0.gif" />
+    <Content Include="layui\images\face\1.gif" />
+    <Content Include="layui\images\face\10.gif" />
+    <Content Include="layui\images\face\11.gif" />
+    <Content Include="layui\images\face\12.gif" />
+    <Content Include="layui\images\face\13.gif" />
+    <Content Include="layui\images\face\14.gif" />
+    <Content Include="layui\images\face\15.gif" />
+    <Content Include="layui\images\face\16.gif" />
+    <Content Include="layui\images\face\17.gif" />
+    <Content Include="layui\images\face\18.gif" />
+    <Content Include="layui\images\face\19.gif" />
+    <Content Include="layui\images\face\2.gif" />
+    <Content Include="layui\images\face\20.gif" />
+    <Content Include="layui\images\face\21.gif" />
+    <Content Include="layui\images\face\22.gif" />
+    <Content Include="layui\images\face\23.gif" />
+    <Content Include="layui\images\face\24.gif" />
+    <Content Include="layui\images\face\25.gif" />
+    <Content Include="layui\images\face\26.gif" />
+    <Content Include="layui\images\face\27.gif" />
+    <Content Include="layui\images\face\28.gif" />
+    <Content Include="layui\images\face\29.gif" />
+    <Content Include="layui\images\face\3.gif" />
+    <Content Include="layui\images\face\30.gif" />
+    <Content Include="layui\images\face\31.gif" />
+    <Content Include="layui\images\face\32.gif" />
+    <Content Include="layui\images\face\33.gif" />
+    <Content Include="layui\images\face\34.gif" />
+    <Content Include="layui\images\face\35.gif" />
+    <Content Include="layui\images\face\36.gif" />
+    <Content Include="layui\images\face\37.gif" />
+    <Content Include="layui\images\face\38.gif" />
+    <Content Include="layui\images\face\39.gif" />
+    <Content Include="layui\images\face\4.gif" />
+    <Content Include="layui\images\face\40.gif" />
+    <Content Include="layui\images\face\41.gif" />
+    <Content Include="layui\images\face\42.gif" />
+    <Content Include="layui\images\face\43.gif" />
+    <Content Include="layui\images\face\44.gif" />
+    <Content Include="layui\images\face\45.gif" />
+    <Content Include="layui\images\face\46.gif" />
+    <Content Include="layui\images\face\47.gif" />
+    <Content Include="layui\images\face\48.gif" />
+    <Content Include="layui\images\face\49.gif" />
+    <Content Include="layui\images\face\5.gif" />
+    <Content Include="layui\images\face\50.gif" />
+    <Content Include="layui\images\face\51.gif" />
+    <Content Include="layui\images\face\52.gif" />
+    <Content Include="layui\images\face\53.gif" />
+    <Content Include="layui\images\face\54.gif" />
+    <Content Include="layui\images\face\55.gif" />
+    <Content Include="layui\images\face\56.gif" />
+    <Content Include="layui\images\face\57.gif" />
+    <Content Include="layui\images\face\58.gif" />
+    <Content Include="layui\images\face\59.gif" />
+    <Content Include="layui\images\face\6.gif" />
+    <Content Include="layui\images\face\60.gif" />
+    <Content Include="layui\images\face\61.gif" />
+    <Content Include="layui\images\face\62.gif" />
+    <Content Include="layui\images\face\63.gif" />
+    <Content Include="layui\images\face\64.gif" />
+    <Content Include="layui\images\face\65.gif" />
+    <Content Include="layui\images\face\66.gif" />
+    <Content Include="layui\images\face\67.gif" />
+    <Content Include="layui\images\face\68.gif" />
+    <Content Include="layui\images\face\69.gif" />
+    <Content Include="layui\images\face\7.gif" />
+    <Content Include="layui\images\face\70.gif" />
+    <Content Include="layui\images\face\71.gif" />
+    <Content Include="layui\images\face\8.gif" />
+    <Content Include="layui\images\face\9.gif" />
+    <Content Include="layui\layui.all.js" />
+    <Content Include="layui\layui.js" />
+    <Content Include="layui\lay\modules\carousel.js" />
+    <Content Include="layui\lay\modules\code.js" />
+    <Content Include="layui\lay\modules\colorpicker.js" />
+    <Content Include="layui\lay\modules\element.js" />
+    <Content Include="layui\lay\modules\flow.js" />
+    <Content Include="layui\lay\modules\form.js" />
+    <Content Include="layui\lay\modules\jquery.js" />
+    <Content Include="layui\lay\modules\laydate.js" />
+    <Content Include="layui\lay\modules\layedit.js" />
+    <Content Include="layui\lay\modules\layer.js" />
+    <Content Include="layui\lay\modules\laypage.js" />
+    <Content Include="layui\lay\modules\laytpl.js" />
+    <Content Include="layui\lay\modules\mobile.js" />
+    <Content Include="layui\lay\modules\rate.js" />
+    <Content Include="layui\lay\modules\slider.js" />
+    <Content Include="layui\lay\modules\table.js" />
+    <Content Include="layui\lay\modules\transfer.js" />
+    <Content Include="layui\lay\modules\tree.js" />
+    <Content Include="layui\lay\modules\upload.js" />
+    <Content Include="layui\lay\modules\util.js" />
+    <Content Include="Scripts\jquery-1.10.2.js" />
+    <Content Include="Scripts\jquery-1.10.2.min.js" />
+    <Content Include="Web.config" />
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Views\Web.config" />
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\User\Index.cshtml" />
+    <Content Include="Views\Permission\Index.cshtml" />
+    <Content Include="Views\InfoConfig\Index.cshtml" />
+    <Content Include="Views\User_Permission\Index.cshtml" />
+    <Content Include="Views\Log\Index.cshtml" />
+    <Content Include="Views\ErrorHandler\Index.cshtml" />
+    <Content Include="Views\Login\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="font\glyphicons-halflings-regular.woff" />
+    <Content Include="font\glyphicons-halflings-regular.ttf" />
+    <Content Include="font\glyphicons-halflings-regular.eot" />
+    <Content Include="packages.config" />
+    <None Include="Project_Readme.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BackstageManagement.Common\BackstageManagement.Common.csproj">
+      <Project>{D6A94D12-C904-4612-8C31-5EB338259032}</Project>
+      <Name>BackstageManagement.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BackstageManagement.IServices\BackstageManagement.IServices.csproj">
+      <Project>{f58d8b4d-7132-46e9-aacc-f1680c13a47a}</Project>
+      <Name>BackstageManagement.IServices</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BackstageManagement.Model\BackstageManagement.Model.csproj">
+      <Project>{86d71d3a-dc71-4464-bedf-69d24239fd8b}</Project>
+      <Name>BackstageManagement.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BackstageManagement.Services\BackstageManagement.Services.csproj">
+      <Project>{b867b325-219c-4c18-a5a5-85d12f0a0e7c}</Project>
+      <Name>BackstageManagement.Services</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
+    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(WebProjectOutputDir)" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>False</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>18499</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:51317/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target> -->
+</Project>

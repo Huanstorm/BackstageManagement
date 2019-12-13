@@ -1,0 +1,79 @@
+﻿
+
+<div class="layui-card">
+    <div class="layui-card-header">
+        菜单管理
+    </div>
+    <div class="layui-card-body">
+        <div class="layui-row" style="text-align:left">
+            <button class="layui-btn" id="btnAddPermission">
+                <i class="layui-icon layui-icon-add-circle"></i>
+                添加
+            </button>
+            <button class="layui-btn" id="btnRefresh">
+                <i class="layui-icon layui-icon-refresh"></i>
+                刷新
+            </button>
+            <table class="layui-hide" id="permissiontable" lay-filter="permissiontable"></table>
+        </div>
+    </div>
+</div>
+
+@section head{
+    <script type="text/html" id="operationTpl">
+        <div>
+            <a class="layui-btn layui-btn-xs" lay-event="edit">
+                <i class="layui-icon layui-icon-edit"></i>编辑
+            </a>
+            <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="delete">
+                <i class="layui-icon layui-icon-delete"></i>删除
+            </a>
+        </div>
+    </script>
+    <script type="text/html" id="addPermission">
+        <div style="margin:15px 25px 0px 0px">
+            <form class="layui-form">
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">菜单名称</label>
+                        <div class="layui-input-inline">
+                            <input type="text" id="permissionName" required lay-verify="required" placeholder="输入菜单名称" class="layui-input" />
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="layui-form-label">菜单地址</label>
+                        <div class="layui-input-inline">
+                            <input type="text" id="permissionUrl" placeholder="输入菜单地址" class="layui-input" />
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">选择父级菜单</label>
+                    <div class="layui-input-block">
+                        <select id="parentPermissionName" lay-filter="parentName">
+                            <option value="">请选择</option>
+                        </select>
+                    </div>
+
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">菜单描述</label>
+                    <div class="layui-input-block">
+                        <input id="permissionDescription" type="text" placeholder="输入菜单描述" class="layui-input" />
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">备注</label>
+                    <div class="layui-input-block">
+                        <input id="remark" type="text" placeholder="输入备注" class="layui-input" />
+                    </div>
+                </div>
+
+            </form>
+        </div>
+
+    </script>
+    <script type="text/javascript" src="../Scripts/permission.js"></script>
+
+}
+
