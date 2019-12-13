@@ -48,12 +48,7 @@ namespace BackstageManagement.Model.Context
         public DbSet<EmployeeEntity> EmployeeDb { get { return new DbSet<EmployeeEntity>(Db); } }
         public DbSet<PermissionEntity> PermissionDb { get { return new DbSet<PermissionEntity>(Db); } }
         public DbSet<Employee_Permission> Employee_PermissionDb { get { return new DbSet<Employee_Permission>(Db); } }
-        public DbSet<WorkStationEntity> WorkStationDb { get { return new DbSet<WorkStationEntity>(Db); } }
         public DbSet<InfoConfigEntity> InfoConfigDb { get { return new DbSet<InfoConfigEntity>(Db); } }
-        public DbSet<ToolingInfoEntity> ToolingInfoDb { get { return new DbSet<ToolingInfoEntity>(Db); } }
         public DbSet<LogEntity> LogDb { get { return new DbSet<LogEntity>(Db); } }
-        public DbSet<UNTScriptEntity> UNTScriptDb { get { return new DbSet<UNTScriptEntity>(Db); } }
-        public DbSet<UNTLogEntity> UNTLogDb { get { return new DbSet<UNTLogEntity>(Db); } }
-        public DbSet<WorkStationUNTEntity> WorkStationUNTDb { get { return new DbSet<WorkStationUNTEntity>(Db); } }
     }
 }
