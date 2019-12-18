@@ -36,7 +36,6 @@ namespace BackstageManagement
                 InitKeyType = InitKeyType.Attribute,
                 IsAutoCloseConnection = true,
             }));
-            builder.RegisterType<SqlSugarClient>();
             var repositoryDllFile = Path.Combine(basepath, "BackstageManagement.Repository.dll");
             var assemblysRepository = Assembly.LoadFrom(repositoryDllFile);
             builder.RegisterAssemblyTypes(assemblysRepository).AsImplementedInterfaces();
