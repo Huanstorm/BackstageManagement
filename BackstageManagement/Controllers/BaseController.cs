@@ -1,6 +1,7 @@
 ﻿using BackstageManagement.Common;
 using BackstageManagement.IServices;
 using BackstageManagement.Model.Models;
+using System;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -29,14 +30,20 @@ namespace BackstageManagement.Controllers
         {
             get
             {
-                _loginUser = Session[Utils.SESSION_LOGIN_ADMIN] as EmployeeEntity;
+                //_loginUser = Session[Utils.SESSION_LOGIN_ADMIN] as EmployeeEntity;
+                _loginUser = JWTHelper.GetJwtDecode(Request.Cookies[Utils.COOKIE_LOGIN_KEY]?.Value);
                 return _loginUser;
             }
             set
             {
                 if (value != null)
                 {
-                    Session[Utils.SESSION_LOGIN_ADMIN] = value;
+                    //Session[Utils.SESSION_LOGIN_ADMIN] = value;
+                    Request.Cookies.Add(new System.Web.HttpCookie(Utils.COOKIE_LOGIN_KEY, JWTHelper.SetJwtEncode(value)));
+                }
+                else
+                {
+                    if (Request.Cookies[Utils.COOKIE_LOGIN_KEY] != null) Request.Cookies[Utils.COOKIE_LOGIN_KEY].Expires = DateTime.Now.AddDays(-1);
                 }
                 _loginUser = value;
             }

@@ -159,7 +159,8 @@ namespace BackstageManagement.Controllers
             JsonResponse result = new JsonResponse();
             try
             {
-                Session.Remove(Utils.SESSION_LOGIN_ADMIN);
+                //Session.Remove(Utils.SESSION_LOGIN_ADMIN);
+                this.LoginUser = null;
                 result.redirect = "/";
                 return Json(result);
             }

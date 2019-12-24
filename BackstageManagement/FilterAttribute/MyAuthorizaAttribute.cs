@@ -12,12 +12,23 @@ namespace BackstageManagement.FilterAttribute
         protected override bool AuthorizeCore(HttpContextBase httpContext)
         {
             //return base.AuthorizeCore(httpContext);
-            var loginUser = httpContext.Session[Utils.SESSION_LOGIN_ADMIN];
-            if (loginUser == null)
+            //var loginUser = httpContext.Session[Utils.SESSION_LOGIN_ADMIN];
+            //if (loginUser == null)
+            //{
+            //    return false;
+            //}
+            //return true;
+
+            var cookie = httpContext.Request.Cookies[Utils.COOKIE_LOGIN_KEY];//cookie验证
+            var authHeader = httpContext.Request.Headers.AllKeys.FirstOrDefault(c => c == "auth");//头部验证
+
+            if (cookie != null || !string.IsNullOrEmpty(authHeader))
             {
-                return false;
+                var token = cookie != null ? cookie.Value : httpContext.Request.Headers["auth"];
+                var info = JWTHelper.GetJwtDecode(token);
+                return info != null;
             }
-            return true;
+            return false;
         }
         protected override void HandleUnauthorizedRequest(AuthorizationContext filterContext)
         {
