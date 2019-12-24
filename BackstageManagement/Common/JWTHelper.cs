@@ -45,17 +45,4 @@ namespace BackstageManagement
         }
 
     }
-
-    /// <summary>
-    /// 这边看看需要什么不敏感字段，表的字段
-    /// </summary>
-    public class UserInfo {
-
-        public int Id { get; set; }
-        public string LoginNo { get; set; }
-        public string LoginName { get; set; }
-        public string Password { get; set; }
-        public string EmployeeType { get; set; }
-
-    }
 }
