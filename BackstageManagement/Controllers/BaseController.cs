@@ -1,4 +1,5 @@
 ﻿using BackstageManagement.Common;
+using BackstageManagement.FilterAttribute;
 using BackstageManagement.IServices;
 using BackstageManagement.Model.Models;
 using System;
@@ -10,9 +11,10 @@ using System.Web.Routing;
 
 namespace BackstageManagement.Controllers
 {
+    [MyAuthoriza]
     /// <summary>
     /// 基础控制器
-    /// </summary>
+    /// </summary>    
     public class BaseController:Controller
     {
         public IEmployeePermissionServices _employeePermissionServices;
@@ -39,11 +41,11 @@ namespace BackstageManagement.Controllers
                 if (value != null)
                 {
                     //Session[Utils.SESSION_LOGIN_ADMIN] = value;
-                    Request.Cookies.Add(new System.Web.HttpCookie(Utils.COOKIE_LOGIN_KEY, JWTHelper.SetJwtEncode(value)));
+                    Response.Cookies.Add(new System.Web.HttpCookie(Utils.COOKIE_LOGIN_KEY, JWTHelper.SetJwtEncode(value)));
                 }
                 else
                 {
-                    if (Request.Cookies[Utils.COOKIE_LOGIN_KEY] != null) Request.Cookies[Utils.COOKIE_LOGIN_KEY].Expires = DateTime.Now.AddDays(-1);
+                    if (Request.Cookies[Utils.COOKIE_LOGIN_KEY] != null) Response.Cookies[Utils.COOKIE_LOGIN_KEY].Expires = DateTime.Now.AddDays(-1);
                 }
                 _loginUser = value;
             }

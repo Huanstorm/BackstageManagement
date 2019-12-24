@@ -28,12 +28,20 @@ namespace BackstageManagement.FilterAttribute
                 var info = JWTHelper.GetJwtDecode(token);
                 return info != null;
             }
+            httpContext.Response.StatusCode = 401;
             return false;
         }
         protected override void HandleUnauthorizedRequest(AuthorizationContext filterContext)
         {
             //base.HandleUnauthorizedRequest(filterContext);
-            filterContext.HttpContext.Response.Redirect("/Login/Index");
+            //filterContext.HttpContext.Response.Redirect("/Login/Index");
+           
+            if (filterContext.HttpContext.Response.StatusCode == 401)
+            {
+                filterContext.Result = new RedirectResult("/Login/Index");
+                //filterContext.HttpContext.Response.Redirect("/Login/Index");
+            }
+            base.HandleUnauthorizedRequest(filterContext);
         }
         
     }
