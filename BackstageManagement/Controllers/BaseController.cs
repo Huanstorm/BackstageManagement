@@ -35,18 +35,19 @@ namespace BackstageManagement.Controllers
             {
                 //_loginUser = Session[Utils.SESSION_LOGIN_ADMIN] as EmployeeEntity;
                 _loginUser = JWTHelper.GetJwtDecode(Request.Cookies[Utils.COOKIE_LOGIN_KEY]?.Value);
+                if (_loginUser == null) RemoveCookie();
                 return _loginUser;
             }
             set
             {
                 if (value != null)
                 {
-                    //Session[Utils.SESSION_LOGIN_ADMIN] = value;
+                    //Session[Utils.SESSION_LOGIN_ADMIN] = value;                   
                     Response.Cookies.Add(new System.Web.HttpCookie(Utils.COOKIE_LOGIN_KEY, JWTHelper.SetJwtEncode(value)));
                 }
                 else
                 {
-                    if (Request.Cookies[Utils.COOKIE_LOGIN_KEY] != null) Response.Cookies[Utils.COOKIE_LOGIN_KEY].Expires = DateTime.Now.AddDays(-1);
+                    RemoveCookie();
                 }
                 _loginUser = value;
             }
@@ -114,6 +115,16 @@ namespace BackstageManagement.Controllers
                     }
                 }
                 ViewBag.MenuItems = sb.ToString();
+            }
+        }
+
+        void RemoveCookie()
+        {
+            var cookie = Request.Cookies[Utils.COOKIE_LOGIN_KEY];
+            if (cookie != null)
+            {
+                cookie.Expires = DateTime.Now.AddDays(-1);
+                Response.AppendCookie(cookie);
             }
         }
         
