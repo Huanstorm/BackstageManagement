@@ -143,6 +143,7 @@
     <Compile Include="Controllers\LogController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\PermissionController.cs" />
+    <Compile Include="Controllers\RoleController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\User_PermissionController.cs" />
     <Compile Include="Global.asax.cs">
@@ -306,6 +307,7 @@
     <Content Include="Views\ErrorHandler\Index.cshtml" />
     <Content Include="Views\Login\Index.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Role\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

@@ -36,7 +36,7 @@ namespace BackstageManagement.Controllers
             JsonResponse result = new JsonResponse();
             try
             {
-                var user = await _employeeServices.GetEmployeeByNo(userName, password);
+                var user = await _employeeServices.GetUserByLoginName(userName, password);
                 if (user != null)
                 {
                     this.LoginUser = user;

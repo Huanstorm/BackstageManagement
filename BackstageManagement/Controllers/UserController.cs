@@ -12,13 +12,13 @@ namespace BackstageManagement.Controllers
 {
     public class UserController : BaseController
     {
-        private readonly ISystemUserServices _employeeServices;
+        private readonly ISystemUserServices _systemUserServices;
 
         public UserController(IRolePermissionServices rolePermissionServices, 
-            ISystemUserServices employeeServices,
+            ISystemUserServices systemUserServices,
             ILogServices logServices) : base(rolePermissionServices, logServices)
         {
-            _employeeServices = employeeServices;
+            _systemUserServices = systemUserServices;
         }
         public async Task<ActionResult> Index()
         {
@@ -36,7 +36,7 @@ namespace BackstageManagement.Controllers
             JsonResponse result = new JsonResponse();
             try
             {
-                var users =await _employeeServices.Query(c=>c.IsDeleted==false);
+                var users =await _systemUserServices.QueryUsers();
                 result.code = ResponseCode.Success;
                 result.data = users.ToList().Skip((page - 1) * limit).Take(limit).ToList();
                 result.count = users.Count;
@@ -59,8 +59,8 @@ namespace BackstageManagement.Controllers
             try
             {
                 SystemUserEntity entity = JsonConvert.DeserializeObject<SystemUserEntity>(param);
-                entity.ModifyTime = DateTime.Now;
-                int userId =await _employeeServices.AddEmployee(entity);
+                entity.CreationTime = DateTime.Now;
+                int userId =await _systemUserServices.AddEmployee(entity);
                 if (userId == -1)
                 {
                     result.code = ResponseCode.Fail;
@@ -88,9 +88,9 @@ namespace BackstageManagement.Controllers
             JsonResponse result = new JsonResponse();
             try
             {
-                var entity =await _employeeServices.QueryById(id);
+                var entity =await _systemUserServices.QueryById(id);
                 entity.IsDeleted = true;
-                var res = _employeeServices.Update(entity);
+                var res = _systemUserServices.Update(entity);
                 await _logServices.WriteSystemLog(LoginUser.Id, "删除用户", string.Format("信息={0}，结果:{1}", JsonConvert.SerializeObject(entity), res));
             }
             catch (Exception ex)
@@ -113,7 +113,7 @@ namespace BackstageManagement.Controllers
             {
                 SystemUserEntity entity = JsonConvert.DeserializeObject<SystemUserEntity>(param);
                 entity.ModifyTime = DateTime.Now;
-                var res =await  _employeeServices.Update(entity);
+                var res =await  _systemUserServices.Update(entity);
                 await _logServices.WriteSystemLog(LoginUser.Id, "编辑用户", string.Format("信息={0}，结果:{1}", param, res));
                 if (!res)
                 {
@@ -139,7 +139,7 @@ namespace BackstageManagement.Controllers
             JsonResponse result = new JsonResponse();
             try
             {
-                var users =await _employeeServices.Query(c => c.IsDeleted==false);
+                var users =await _systemUserServices.Query(c => c.IsDeleted==false);
                 result.data = users;
             }
             catch (Exception ex)

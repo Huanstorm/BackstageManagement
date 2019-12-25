@@ -10,22 +10,18 @@
         method: 'post',
         height: 'full-210',
         cols: [[
-            { field: '', type: 'numbers', title: '序号', sort: false, width: 100 },
-            { field: 'Id', title: 'LoginId', hide: true },
-            { field: 'LoginNo', title: '工号', sort: false },
-            { field: 'LoginName', title: '姓名', sort: false },
-            { field: 'EmployeeTypeString', title: '员工类型', sort: false },
+            { field: '', type: 'numbers', sort: false },
+            { field: 'Id', hide: true },
+            { field: 'LoginName', title: '登录名', sort: false },
+            { field: 'RealName', title: '昵称', sort: false },
+            { field: 'RoleName', title: '角色', templet: '#roleTpl', sort: false },
+            { field: 'CreationTimeString', title: '创建时间', sort: true },
             { field: 'Remark', title: '备注', sort: false },
-            { field: 'ModifyTimeString', title: '修改时间', sort: true },
             { field: '', title: '操作', templet: '#operationTpl' }
         ]],
         done: function (res, curr, count) {
-            console.log(res)
-            if (res.code == 1) {
+            if (res.code !== 0) {
                 layer.alert(res.msg);
-            }
-            else if (res.code == 2) {
-                window.location = res.redirect;
             }
             NProgress.done();
         },
@@ -33,11 +29,11 @@
     });
     table.on('tool(usertable)', function (obj) {
         var data = obj.data;
-        if (data.LoginNo=="admin") {
+        if (data.LoginNo === "admin") {
             layer.alert("admin用户不能编辑或删除！");
             return;
         }
-        if (obj.event == 'delete') {
+        if (obj.event === 'delete') {
             layer.confirm("确定要删除该用户？", function (index) {
                 $.ajax({
                     url: '/User/DeleteUser',
@@ -46,64 +42,66 @@
                     },
                     type: 'Post',
                     success: function (res) {
-                        if (res.code == 0) {
+                        if (res.code === 0) {
                             layer.close(index);
                             tableindex.reload();
-                            console.log(res);
                         }
-                        else if (res.code == 2) {
-                            window.location = res.redirect;
-                        }
-                        else{
+                        else {
+                            layer.close(index);
                             layer.alert(res.msg);
                         }
                     }
-                })
-                layer.close(index);
-
-            })
+                });
+            });
         }
-        else if (obj.event == 'edit') {
+        else if (obj.event === 'edit') {
             var temindex = layer.open({
                 type: 1,
-                area: ['700px', '400px'],
+                area: ['680px', '400px'],
                 title: '编辑员工信息',
-                content: $('#addUser').html(),
+                content: $('#userInfo').html(),
                 success: function (layero, index) {
                     layero.addClass('layui-form');
                     layero.find('.layui-layer-btn0').attr('lay-filter', 'formVerify').attr('lay-submit', '');
+                    $.ajax({
+                        url: '/Role/GetRoles',
+                        type: 'post',
+                        dataType: 'json',
+                        success: function (res) {
+                            if (res.code === 0) {
+                                $.each(res.data, function (index, item) {
+                                    $('#userRole').append(new Option(item.Name, item.Id));
+                                });
+                            }
+                            else {
+                                layer.alert(res.msg);
+                            }
+                            $("#loginName").val(data.LoginName);
+                            $("#realName").val(data.RealName);
+                            $("#userRole").val(data.RoleId);
+                            $("#remark").val(data.Remark);
+                            $("#password").val(data.Password);
 
-                    $("#loginNo").val(data.LoginNo);
-                    $("#loginName").val(data.LoginName);
-                    $("#employeeType").val(data.EmployeeType);
-                    $("#remark").val(data.Remark);
-                    $("#psd").hide();
-                    if (data.EmployeeType == 1) {
-                        
-                        $("#psd").show();
-                        $("#password").val(data.Password);
-                    }
-                    else {
-                        layero.find("#password").removeAttr("required").removeAttr("lay-verify");
-                    }
-
-                    form.render();
+                            form.render();
+                            form.render();
+                        }
+                    });
+                    
 
                 },
                 btn: ['保存', '取消'],
                 yes: function (index, layero) {
                     form.on('submit(formVerify)', function () {
-                        var loginNo = $("#loginNo").val();
-                        var loginName = $("#loginName").val();
-                        var employeeType = $("#employeeType").val();
-                        var password = $("#password").val();
-                        var remark = $("#remark").val();
                         var entity = {};
-                        entity.Id = data.Id;
-                        entity.loginNo = loginNo;
+                        var loginName = $("#loginName").val();
+                        var realName = $("#realName").val();
+                        var password = $("#password").val();
+                        var roleId = $("#userRole").val();
+                        var remark = $("#remark").val();
                         entity.loginName = loginName;
-                        entity.employeeType = employeeType;
+                        entity.realName = realName;
                         entity.password = password;
+                        entity.roleId = roleId;
                         entity.remark = remark;
                         $.ajax({
                             url: '/User/EditUserInfo',
@@ -112,54 +110,63 @@
                             },
                             type: 'Post',
                             success: function (res) {
-                                if (res.code == 0) {
+                                if (res.code === 0) {
                                     layer.close(temindex);
                                     tableindex.reload();
-                                    console.log(res);
-                                }
-                                else if (res.code == 2) {
-                                    window.location = res.redirect;
                                 }
                                 else {
                                     layer.alert(res.msg);
                                 }
                             }
-                        })
-                    })
-                },
-            })
+                        });
+                    });
+                }
+            });
         }
-    })
+    });
     $("#btnRefresh").click(function () {
         tableindex.reload();
-    })
+    });
     $("#btnAddUser").click(function () {
         var temindex = layer.open({
             type: 1,
-            area: ['700px', '400px'],
-            title: '添加员工信息',
-            content: $('#addUser').html(),
+            area: ['680px', '400px'],
+            title: '新增用户',
+            content: $('#userInfo').html(),
             btn: ['保存', '取消'],
             success: function (layero, index) {
                 layero.addClass('layui-form');
                 layero.find('.layui-layer-btn0').attr('lay-filter', 'formVerify').attr('lay-submit', '');
-                
-                form.render();
+                $.ajax({
+                    url: '/Role/GetRoles',
+                    type: 'post',
+                    dataType: 'json',
+                    success: function (res) {
+                        if (res.code === 0) {
+                            $.each(res.data, function (index, item) {
+                                $('#userRole').append(new Option(item.Name, item.Id));
+                            });
+                        }
+                        else {
+                            layer.alert(res.msg);
+                        }
+                        form.render();
+                    }
+                });
             },
             yes: function (index, layero) {
                 form.on('submit(formVerify)', function () {
                     var entity = {};
-                    var loginNo = $("#loginNo").val();
                     var loginName = $("#loginName").val();
-                    var employeeType = $("#employeeType").val();
+                    var realName = $("#realName").val();
                     var password = $("#password").val();
+                    var roleId = $("#userRole").val();
                     var remark = $("#remark").val();
-                    var entity = {};
-                    entity["LoginNo"] = loginNo;
-                    entity["LoginName"] = loginName;
-                    entity["EmployeeType"] = employeeType;
-                    entity["Password"] = password;
-                    entity["Remark"] = remark;
+                    entity.loginName = loginName;
+                    entity.realName = realName;
+                    entity.password = password;
+                    entity.roleId = roleId;
+                    entity.remark = remark;
                     $.ajax({
                         url: '/User/AddUserInfo',
                         data: {
@@ -167,39 +174,17 @@
                         },
                         type: 'Post',
                         success: function (res) {
-                            if (res.code == 0) {
+                            if (res.code === 0) {
                                 layer.close(temindex);
                                 tableindex.reload();
-                                console.log(res);
-                            }
-                            else if (res.code == 2) {
-                                window.location = res.redirect;
                             }
                             else {
                                 layer.alert(res.msg);
                             }
                         }
-                    })
-                })
-            },
-        })
-
-
-
-        form.render('select');
-
-    })
-
-    form.on('select(usertype)', function (data) {
-        if (data.value == 1) {
-            $("#psd").show();
-            $("#password").val("");
-            $("#password").attr("required", true).attr("lay-verify","required");
-        }
-        else {
-            $("#psd").hide();
-            $("#password").val("");
-            $("#password").removeAttr("required").removeAttr("lay-verify");
-        }
-    })
-})
+                    });
+                });
+            }
+        });
+    });
+});

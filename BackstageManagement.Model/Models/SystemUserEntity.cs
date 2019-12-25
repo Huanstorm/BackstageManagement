@@ -8,12 +8,12 @@ namespace BackstageManagement.Model.Models
     public class SystemUserEntity:RootEntity
     {
         /// <summary>
-        /// 工号
+        /// 登录名
         /// </summary>
         [SugarColumn(Length =50,IsNullable =true)]
         public string LoginName { get; set; }
         /// <summary>
-        /// 姓名
+        /// 昵称
         /// </summary>
         [SugarColumn(Length = 50, IsNullable = true)]
         public string RealName { get; set; }

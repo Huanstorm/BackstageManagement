@@ -9,8 +9,10 @@ namespace BackstageManagement.IServices
 {
     public interface ISystemUserServices:IBaseServices<SystemUserEntity>
     {
-        Task<SystemUserEntity> GetEmployeeByNo(string loginNo,string password);
+        Task<SystemUserEntity> GetUserByLoginName(string loginName,string password);
 
         Task<int> AddEmployee(SystemUserEntity entity);
+        Task<List<SystemUserEntity>> QueryUsers();
+
     }
 }

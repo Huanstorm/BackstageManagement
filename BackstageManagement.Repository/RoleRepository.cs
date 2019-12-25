@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace BackstageManagement.Repository
 {
-    public class RoleRepository : BaseRepository<RoleEntity>
+    public class RoleRepository : BaseRepository<RoleEntity>,IRoleRepository
     {
         public RoleRepository(IUnitOfWork unitOfWork) : base(unitOfWork)
         {

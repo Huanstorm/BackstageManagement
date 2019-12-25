@@ -31,5 +31,11 @@ namespace BackstageManagement.Model.Models
         /// </summary>
         [SugarColumn(Length = 200, IsNullable = true)]
         public string Remark { get; set; }
+        [SugarColumn(IsIgnore = true)]
+        public RoleEntity Role { get; set; }
+        [SugarColumn(IsIgnore =true)]
+        public string CreationTimeString { get { return CreationTime.ToString("yyyy-MM-dd HH:mm"); } }
+        [SugarColumn(IsIgnore = true)]
+        public string ModifyTimeString { get { return ModifyTime.HasValue? ModifyTime.Value.ToString("yyyy-MM-dd HH:mm"):""; } }
     }
 }
