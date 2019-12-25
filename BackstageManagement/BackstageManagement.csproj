@@ -154,7 +154,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\login.css" />
+    <Content Include="Content\Login.css" />
     <Content Include="Content\nprogress.css" />
     <Content Include="favicon.ico" />
     <Content Include="font\glyphicons-halflings-regular.svg" />
@@ -165,13 +165,16 @@
     <Content Include="Images\aiwrap.png" />
     <Content Include="Images\bg.png" />
     <Content Include="Scripts\nprogress.js" />
+    <Content Include="Scripts\UNTLogScript.js" />
     <Content Include="Scripts\log.js" />
     <Content Include="Scripts\permission.js" />
-    <Content Include="Scripts\role.js" />
+    <Content Include="Scripts\UNTScript.js" />
     <Content Include="Scripts\user.js" />
     <Content Include="Scripts\InfoConfig.js" />
-    <Content Include="Scripts\rolepermission.js" />
-    <Content Include="Scripts\home.js" />
+    <Content Include="Scripts\ToolingInfo.js" />
+    <Content Include="Scripts\user_permission.js" />
+    <Content Include="Scripts\workbench.js" />
+    <Content Include="Scripts\WorkStation.js" />
     <Content Include="font\iconfont.eot" />
     <Content Include="font\iconfont.ttf" />
     <Content Include="font\iconfont.woff" />

@@ -10,7 +10,7 @@ namespace BackstageManagement.Model.Context
 {
     public class DbContext
     {
-        private string _connectionString = ConfigurationManager.ConnectionStrings["conn"].ToString();
+        private string _connectionString = "server=47.104.252.6;uid=zh;pwd=qwe123;database=backstagemanagement";//ConfigurationManager.ConnectionStrings["conn"].ToString();
         private SqlSugarClient _db;
 
         public string ConnectionString
@@ -44,5 +44,11 @@ namespace BackstageManagement.Model.Context
             }
 
         }
+        
+        public DbSet<EmployeeEntity> EmployeeDb { get { return new DbSet<EmployeeEntity>(Db); } }
+        public DbSet<PermissionEntity> PermissionDb { get { return new DbSet<PermissionEntity>(Db); } }
+        public DbSet<Employee_Permission> Employee_PermissionDb { get { return new DbSet<Employee_Permission>(Db); } }
+        public DbSet<InfoConfigEntity> InfoConfigDb { get { return new DbSet<InfoConfigEntity>(Db); } }
+        public DbSet<LogEntity> LogDb { get { return new DbSet<LogEntity>(Db); } }
     }
 }

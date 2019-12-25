@@ -16,15 +16,26 @@ namespace BackstageManagement.Model
         /// </summary>
         异常日志=2
     }
-    public enum PermissionType { 
+    public enum BelongSystem { 
         /// <summary>
-        /// 菜单
+        /// 管理系统
         /// </summary>
-        Menu=1,
+        管理系统=1,
         /// <summary>
-        /// 按钮
+        /// 测试系统
         /// </summary>
-        Button=2,
+        测试系统=2
+    }
+    public enum EmployeeType
+    {
+        管理人员 = 1,//管理人员
+        测试人员 = 2//测试人员
+    }
+    public enum WorkStationStatus
+    {
+        空闲 = 0,
+        忙碌 = 1,
+        故障 = 2,
     }
     public enum ResponseCode
     {
@@ -36,5 +47,19 @@ namespace BackstageManagement.Model
         /// 失败
         /// </summary>
         Fail = 1,
+        /// <summary>
+        /// Session过期
+        /// </summary>
+        SessionOverDue = 2
+    }
+    public enum IsQualified {
+        /// <summary>
+        /// 合格
+        /// </summary>
+        合格=0,
+        /// <summary>
+        /// 不合格
+        /// </summary>
+        不合格=1
     }
 }

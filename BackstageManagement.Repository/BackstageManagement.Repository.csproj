@@ -45,9 +45,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BaseRepository.cs" />
-    <Compile Include="RolePermissionRepository.cs" />
-    <Compile Include="RoleRepository.cs" />
-    <Compile Include="SystemUserRepository.cs" />
+    <Compile Include="EmployeePermissionRepository.cs" />
+    <Compile Include="EmployeeRepository.cs" />
     <Compile Include="InfoConfigRepository.cs" />
     <Compile Include="LogRepository.cs" />
     <Compile Include="PermissionRepository.cs" />

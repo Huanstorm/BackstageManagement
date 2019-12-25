@@ -24,14 +24,14 @@ namespace BackstageManagement
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             BackstageManagement.Model.Context.DbContext dbContext = new BackstageManagement.Model.Context.DbContext();
-            DbSend.Send(dbContext);
+            DbSend.Send(dbContext).Wait() ;
             var builder = new ContainerBuilder();
             builder.RegisterControllers(typeof(MvcApplication).Assembly).PropertiesAutowired();
             var basepath = AppDomain.CurrentDomain.RelativeSearchPath;
 
             builder.Register<ISqlSugarClient>(c => new SqlSugarClient(new ConnectionConfig
             {
-                ConnectionString = ConfigurationManager.ConnectionStrings["conn"].ToString(),
+                ConnectionString = "server=47.104.252.6;uid=zh;pwd=qwe123;database=backstagemanagement",//ConfigurationManager.ConnectionStrings["conn"].ToString(),
                 DbType = DbType.MySql,
                 InitKeyType = InitKeyType.Attribute,
                 IsAutoCloseConnection = true,

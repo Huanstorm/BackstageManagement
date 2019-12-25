@@ -12,16 +12,18 @@ namespace BackstageManagement.Controllers
     [AllowAnonymous]
     public class LoginController : BaseController
     {
-        public readonly ISystemUserServices _employeeServices;
-        public LoginController(IRolePermissionServices rolePermissionServices
-            , ISystemUserServices employeeServices
-            , ILogServices logServices) : base(rolePermissionServices, logServices)
+        public readonly IEmployeeServices _employeeServices;
+        public LoginController(IEmployeePermissionServices employeePermissionServices
+            , IEmployeeServices employeeServices
+            , ILogServices logServices) : base(employeePermissionServices, logServices)
         {
             _employeeServices = employeeServices;
+            base._employeePermissionServices = employeePermissionServices;
         }
 
         public async Task<ActionResult> Index()
         {
+            ViewBag.Title = "Login";
             await Task.Run(() => { });
             return View();
         }
@@ -41,6 +43,10 @@ namespace BackstageManagement.Controllers
                 {
                     this.LoginUser = user;
                     await _logServices.WriteSystemLog(LoginUser.Id, "登录", " 登录成功！");
+
+                    //var token= JWTHelper.SetJwtEncode(user);
+                    //var info = JWTHelper.GetJwtDecode(token);
+
                     return Json(result);//登录成功
                 }
 

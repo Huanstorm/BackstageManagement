@@ -7,13 +7,18 @@ using System.Web;
 namespace BackstageManagement.Model.Models
 {
     [SugarTable("Log")]
-    public class LogEntity
+    public class LogEntity:RootEntity
     {
         /// <summary>
-        /// ID
+        /// 所属系统
         /// </summary>
-        [SugarColumn(IsIdentity = true, IsPrimaryKey = true, IsNullable = false)]
-        public int Id { get; set; }
+        
+        public BelongSystem BelongSystem { get; set; }
+        /// <summary>
+        /// 所属系统名称
+        /// </summary>
+        [SugarColumn(IsIgnore = true)]
+        public string BelongSystemString { get { return BelongSystem.ToString(); } }
         /// <summary>
         /// 日志类型
         /// </summary>
@@ -24,14 +29,14 @@ namespace BackstageManagement.Model.Models
         [SugarColumn(IsIgnore=true)]
         public string LogTypeString { get { return LogType.ToString(); } }
         /// <summary>
-        /// 登录ID
+        /// 登录名
         /// </summary>
-        public int UserId { get; set; }
+        public int LoginId { get; set; }
         /// <summary>
         /// 登录名
         /// </summary>
         [SugarColumn(IsIgnore =true)]
-        public string LoginName { get; set; }
+        public string LoginNo { get; set; }
         /// <summary>
         /// 日志功能
         /// </summary>

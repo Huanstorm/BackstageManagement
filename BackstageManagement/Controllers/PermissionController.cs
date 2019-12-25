@@ -14,9 +14,9 @@ namespace BackstageManagement.Controllers
     public class PermissionController : BaseController
     {
         private readonly IPermissionServices _permissionServices;
-        public PermissionController(IRolePermissionServices rolePermissionServices, 
+        public PermissionController(IEmployeePermissionServices employeePermissionServices, 
             IPermissionServices permissionServices,
-            ILogServices logServices) : base(rolePermissionServices, logServices)
+            ILogServices logServices) : base(employeePermissionServices,logServices)
         {
             _permissionServices = permissionServices;
         }
@@ -43,7 +43,7 @@ namespace BackstageManagement.Controllers
                     var permission =await _permissionServices.GetSingle(c=>c.Id== item.ParentId);
                     if (permission != null)
                     {
-                        item.ParentName = permission.Name;
+                        item.ParentName = permission.PermissionName;
                     }
                 }
                 result.code = ResponseCode.Success;

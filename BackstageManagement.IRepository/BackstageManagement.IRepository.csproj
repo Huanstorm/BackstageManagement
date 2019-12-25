@@ -45,9 +45,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IBaseRepository.cs" />
-    <Compile Include="IRolePermissionRepository.cs" />
-    <Compile Include="IRoleRepository.cs" />
-    <Compile Include="ISystemUserRepository.cs" />
+    <Compile Include="IEmployeePermissionRepository.cs" />
+    <Compile Include="IEmployeeRepository.cs" />
     <Compile Include="IInfoConfigRepository.cs" />
     <Compile Include="ILogRepository.cs" />
     <Compile Include="IPermissionRepository.cs" />

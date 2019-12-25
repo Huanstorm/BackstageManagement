@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BackstageManagement.IRepository
 {
-    public interface ISystemUserRepository:IBaseRepository<SystemUserEntity>
+    public interface IEmployeeRepository:IBaseRepository<EmployeeEntity>
     {
          
     }

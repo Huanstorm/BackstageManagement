@@ -23,7 +23,8 @@ namespace BackstageManagement.Services
             {
                 LogEntity entity = new LogEntity();
                 entity.LogType = LogType.系统日志;
-                entity.UserId = loginId;
+                entity.LoginId = loginId;
+                entity.BelongSystem = BelongSystem.管理系统;
                 entity.CreationTime = DateTime.Now;
                 entity.LogFunction = function;
                 entity.LogContent = content;
@@ -41,7 +42,8 @@ namespace BackstageManagement.Services
             {
                 LogEntity entity = new LogEntity();
                 entity.LogType = LogType.异常日志;
-                entity.UserId = loginId;
+                entity.LoginId = loginId;
+                entity.BelongSystem = BelongSystem.管理系统;
                 entity.CreationTime = DateTime.Now;
                 entity.LogFunction = function;
                 entity.LogContent = content;
