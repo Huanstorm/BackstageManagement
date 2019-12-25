@@ -19,7 +19,7 @@ namespace BackstageManagement
         /// </summary>
         /// <param name="payload">不敏感的用户数据</param>
         /// <returns></returns>
-        public static string SetJwtEncode(EmployeeEntity payload)
+        public static string SetJwtEncode(SystemUserEntity payload)
         {
             IJwtAlgorithm algorithm = new HMACSHA256Algorithm();
             IJsonSerializer serializer = new JsonNetSerializer();
@@ -33,7 +33,7 @@ namespace BackstageManagement
         /// </summary>
         /// <param name="token"></param>
         /// <returns></returns>
-        public static EmployeeEntity GetJwtDecode(string token)
+        public static SystemUserEntity GetJwtDecode(string token)
         {
             if (String.IsNullOrEmpty(token)) return null;
             IJsonSerializer serializer = new JsonNetSerializer();
@@ -41,7 +41,7 @@ namespace BackstageManagement
             IJwtValidator validator = new JwtValidator(serializer,provider);
             IBase64UrlEncoder urlEncoder = new JwtBase64UrlEncoder();
             IJwtDecoder decoder = new JwtDecoder(serializer, validator, urlEncoder);
-            return decoder.DecodeToObject<EmployeeEntity>(token, secret, true);
+            return decoder.DecodeToObject<SystemUserEntity>(token, secret, true);
         }
 
     }

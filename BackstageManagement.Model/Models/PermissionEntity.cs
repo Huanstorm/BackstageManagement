@@ -15,46 +15,45 @@ namespace BackstageManagement.Model.Models
         [SugarColumn(IsNullable =true)]
         public int? ParentId { get; set; }
         /// <summary>
+        /// 权限名称
+        /// </summary>
+        [SugarColumn(Length = 100)]
+        public string Name { get; set; }
+        /// <summary>
+        /// 菜单地址
+        /// </summary>
+        [SugarColumn(IsNullable =true, Length = 50)]
+        public string Url { get; set; }
+        /// <summary>
+        /// 菜单图标
+        /// </summary>
+        [SugarColumn(Length = 100, IsNullable = true)]
+        public string Icon { get; set; }
+        /// <summary>
+        /// 权限类型
+        /// </summary>
+        public PermissionType Type { get; set; }
+        /// <summary>
+        /// 菜单描述
+        /// </summary>
+        [SugarColumn(IsNullable = true, Length = 200)]
+        public string Description { get; set; }
+        
+
+        /// <summary>
+        /// 是否选中
+        /// </summary>
+        [SugarColumn(IsIgnore = true)]
+        public bool IsChecked { get; set; } = false;
+        /// <summary>
         /// 父级菜单名称
         /// </summary>
-        [SugarColumn(IsIgnore=true)]
+        [SugarColumn(IsIgnore = true)]
         public string ParentName { get; set; }
         /// <summary>
         /// 父级菜单
         /// </summary>
         [SugarColumn(IsIgnore = true)]
         public PermissionEntity Parent { get; set; }
-        /// <summary>
-        /// 菜单名称
-        /// </summary>
-        [SugarColumn(Length = 50)]
-        public string PermissionName { get; set; }
-        /// <summary>
-        /// 菜单地址
-        /// </summary>
-        [SugarColumn(IsNullable =true, Length = 50)]
-        public string PermissionUrl { get; set; }
-        /// <summary>
-        /// 菜单描述
-        /// </summary>
-        [SugarColumn(IsNullable = true, Length = 255)]
-        public string PermissionDescription { get; set; }
-        /// <summary>
-        /// 修改时间
-        /// </summary>
-        public DateTime ModifyTime { get; set; }
-        [SugarColumn(IsIgnore=true)]
-        public string ModifyTimeString { get { return ModifyTime.ToString("yyyy-MM-dd HH:mm");} }
-        /// <summary>
-        /// 是否选中
-        /// </summary>
-        [SugarColumn(IsIgnore = true)]
-        public bool IsChecked { get; set; } = false;
-
-        /// <summary>
-        /// 备注
-        /// </summary>
-        [SugarColumn(Length =255,IsNullable =true)]
-        public string Remark { get; set; }
     }
 }

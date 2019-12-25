@@ -12,11 +12,11 @@ namespace BackstageManagement.Controllers
 {
     public class UserController : BaseController
     {
-        private readonly IEmployeeServices _employeeServices;
+        private readonly ISystemUserServices _employeeServices;
 
-        public UserController(IEmployeePermissionServices employeePermissionServices, 
-            IEmployeeServices employeeServices,
-            ILogServices logServices) : base(employeePermissionServices,logServices)
+        public UserController(IRolePermissionServices rolePermissionServices, 
+            ISystemUserServices employeeServices,
+            ILogServices logServices) : base(rolePermissionServices, logServices)
         {
             _employeeServices = employeeServices;
         }
@@ -58,7 +58,7 @@ namespace BackstageManagement.Controllers
             JsonResponse result = new JsonResponse();
             try
             {
-                EmployeeEntity entity = JsonConvert.DeserializeObject<EmployeeEntity>(param);
+                SystemUserEntity entity = JsonConvert.DeserializeObject<SystemUserEntity>(param);
                 entity.ModifyTime = DateTime.Now;
                 int userId =await _employeeServices.AddEmployee(entity);
                 if (userId == -1)
@@ -111,7 +111,7 @@ namespace BackstageManagement.Controllers
             JsonResponse result = new JsonResponse();
             try
             {
-                EmployeeEntity entity = JsonConvert.DeserializeObject<EmployeeEntity>(param);
+                SystemUserEntity entity = JsonConvert.DeserializeObject<SystemUserEntity>(param);
                 entity.ModifyTime = DateTime.Now;
                 var res =await  _employeeServices.Update(entity);
                 await _logServices.WriteSystemLog(LoginUser.Id, "编辑用户", string.Format("信息={0}，结果:{1}", param, res));
@@ -139,7 +139,7 @@ namespace BackstageManagement.Controllers
             JsonResponse result = new JsonResponse();
             try
             {
-                var users =await _employeeServices.Query(c => (EmployeeType)c.EmployeeType == EmployeeType.管理人员&&c.IsDeleted==false);
+                var users =await _employeeServices.Query(c => c.IsDeleted==false);
                 result.data = users;
             }
             catch (Exception ex)

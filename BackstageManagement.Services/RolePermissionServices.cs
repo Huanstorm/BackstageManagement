@@ -9,31 +9,31 @@ using System.Threading.Tasks;
 
 namespace BackstageManagement.Services
 {
-    public class EmployeePermissionServices : BaseServices<Employee_Permission>, IEmployeePermissionServices
+    public class RolePermissionServices : BaseServices<RolePermissionEntity>, IRolePermissionServices
     {
-        IEmployeePermissionRepository _dal;
-        IUnitOfWork _unitOfWork;
-        public EmployeePermissionServices(IEmployeePermissionRepository dal,IUnitOfWork unitOfWork) {
+        readonly IRolePermissionRepository _dal;
+        readonly IUnitOfWork _unitOfWork;
+        public RolePermissionServices(IRolePermissionRepository dal,IUnitOfWork unitOfWork) {
             _dal = dal;
             base.BaseDal = dal;
             _unitOfWork = unitOfWork;
         }
-        public async Task<List<Employee_Permission>> QueryByEmployeeId(int employeeId)
+        public async Task<List<RolePermissionEntity>> QueryByRoleId(int roleId)
         {
-            return await _dal.QueryByLoginId(employeeId);
+            return await _dal.QueryByRoleId(roleId);
         }
 
-        public async Task<int> SavePermissionInfo(int employeeId, List<Employee_Permission> employee_Permissions)
+        public async Task<int> SaveRolePermissions(int roleId, List<RolePermissionEntity> rolePermissions)
         {
             try
             {
                 int count = 0;
                 _unitOfWork.BeginTran();
-                var deleteRes = await BaseDal.Delete(c => c.EmployeeId == employeeId);
-                foreach (var item in employee_Permissions)
+                var deleteRes = await BaseDal.Delete(c => c.RoleId == roleId);
+                foreach (var item in rolePermissions)
                 {
-                    Employee_Permission ep = new Employee_Permission();
-                    ep.EmployeeId = employeeId;
+                    RolePermissionEntity ep = new RolePermissionEntity();
+                    ep.RoleId = roleId;
                     ep.PermissionId = item.PermissionId;
                     await _dal.Add(ep);
                     count++;
