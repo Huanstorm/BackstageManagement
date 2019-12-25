@@ -39,7 +39,7 @@ namespace BackstageManagement.FilterAttribute
             if (filterContext.HttpContext.Response.StatusCode == 401)
             {
                 filterContext.Result = new RedirectResult("/Login/Index");
-                //filterContext.HttpContext.Response.Redirect("/Login/Index");
+                filterContext.HttpContext.Response.Redirect("/Login/Index");
             }
             base.HandleUnauthorizedRequest(filterContext);
         }

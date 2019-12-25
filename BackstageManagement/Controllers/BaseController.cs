@@ -34,19 +34,24 @@ namespace BackstageManagement.Controllers
             get
             {
                 //_loginUser = Session[Utils.SESSION_LOGIN_ADMIN] as EmployeeEntity;
-                _loginUser = JWTHelper.GetJwtDecode(Request.Cookies[Utils.COOKIE_LOGIN_KEY]?.Value);
+                _loginUser = JWTHelper.GetJwtDecode(Request.Cookies[Utils.COOKIE_LOGIN_KEY]?.Value);       
                 return _loginUser;
             }
             set
             {
                 if (value != null)
                 {
-                    //Session[Utils.SESSION_LOGIN_ADMIN] = value;
+                    //Session[Utils.SESSION_LOGIN_ADMIN] = value;                   
                     Response.Cookies.Add(new System.Web.HttpCookie(Utils.COOKIE_LOGIN_KEY, JWTHelper.SetJwtEncode(value)));
                 }
                 else
                 {
-                    if (Request.Cookies[Utils.COOKIE_LOGIN_KEY] != null) Response.Cookies[Utils.COOKIE_LOGIN_KEY].Expires = DateTime.Now.AddDays(-1);
+                    if (Request.Cookies[Utils.COOKIE_LOGIN_KEY] != null)
+                    {
+                        var cookie = Request.Cookies[Utils.COOKIE_LOGIN_KEY];
+                        cookie.Expires.AddDays(-1);
+                        Response.AppendCookie(cookie);
+                    }
                 }
                 _loginUser = value;
             }
