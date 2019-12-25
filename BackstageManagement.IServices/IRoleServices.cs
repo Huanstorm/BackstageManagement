@@ -7,10 +7,8 @@ using System.Threading.Tasks;
 
 namespace BackstageManagement.IServices
 {
-    public interface IEmployeeServices:IBaseServices<EmployeeEntity>
+    public interface IRoleServices:IBaseServices<RoleEntity>
     {
-        Task<EmployeeEntity> GetEmployeeByNo(string loginNo,string password);
 
-        Task<int> AddEmployee(EmployeeEntity entity);
     }
 }

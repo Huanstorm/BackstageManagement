@@ -13,10 +13,10 @@ namespace BackstageManagement.Controllers
 {
     public class LogController : BaseController
     {
-        private readonly IEmployeeServices _employeeServices;
-        public LogController(IEmployeePermissionServices employeePermissionServices,
+        private readonly ISystemUserServices _employeeServices;
+        public LogController(IRolePermissionServices rolePermissionServices,
             ILogServices logServices,
-            IEmployeeServices employeeServices) : base(employeePermissionServices,logServices)
+            ISystemUserServices employeeServices) : base(rolePermissionServices, logServices)
         {
             _employeeServices = employeeServices;
         }
@@ -42,10 +42,6 @@ namespace BackstageManagement.Controllers
             try
             {
                 List<LogEntity> logs =await _logServices.GetAll();
-                if (system != null)
-                {
-                    logs = logs.Where(c => c.BelongSystem == (BelongSystem)system).ToList();
-                }
                 if (logtype != null)
                 {
                     logs = logs.Where(c => c.LogType == (LogType)logtype).ToList();
@@ -63,8 +59,8 @@ namespace BackstageManagement.Controllers
                 logs = logs.OrderByDescending(c => c.CreationTime).ToList();
                 foreach (var item in logs)
                 {
-                    var user =await _employeeServices.QueryById(item.LoginId);
-                    item.LoginNo = user.LoginNo;
+                    var user =await _employeeServices.QueryById(item.UserId);
+                    item.LoginName = user.LoginName;
                 }
                 result.data = logs.Skip((page - 1) * limit).Take(limit).ToList();
                 result.count = logs.Count;

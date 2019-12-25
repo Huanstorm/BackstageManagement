@@ -14,9 +14,9 @@ namespace BackstageManagement.Controllers
     public class InfoConfigController : BaseController
     {
         private readonly IInfoConfigServices _infoConfigServices;
-        public InfoConfigController(IEmployeePermissionServices employeePermissionServices,
+        public InfoConfigController(IRolePermissionServices rolePermissionServices,
             IInfoConfigServices infoConfigServices, 
-            ILogServices logServices) : base(employeePermissionServices,logServices)
+            ILogServices logServices) : base(rolePermissionServices, logServices)
         {
             _infoConfigServices = infoConfigServices;
         }

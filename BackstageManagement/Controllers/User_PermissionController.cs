@@ -14,9 +14,9 @@ namespace BackstageManagement.Controllers
     public class User_PermissionController : BaseController
     {
         private readonly IPermissionServices _permissionServices;
-        public User_PermissionController(IEmployeePermissionServices employeePermissionServices, 
+        public User_PermissionController(IRolePermissionServices rolePermissionServices, 
             IPermissionServices permissionServices,
-            ILogServices logServices) : base(employeePermissionServices,logServices)
+            ILogServices logServices) : base(rolePermissionServices, logServices)
         {
             _permissionServices = permissionServices;
         }
@@ -38,7 +38,7 @@ namespace BackstageManagement.Controllers
             {
                 List<TreeEntity> tree = new List<TreeEntity>();
                 var Permissions =await _permissionServices.GetAll();
-                var userPermission =await _employeePermissionServices.QueryByEmployeeId(employeeId);
+                var userPermission =await _rolePermissionServices.QueryByRoleId(employeeId);
                 foreach (var item in userPermission)
                 {
                     foreach (var per in Permissions)
@@ -55,7 +55,7 @@ namespace BackstageManagement.Controllers
                     {
                         id = parent.Id,
                         @checked = parent.IsChecked,
-                        title = parent.PermissionName
+                        title = parent.Name
                     });
                     foreach (var child in Permissions.Where(a => a.ParentId == parent.Id))
                     {
@@ -63,7 +63,7 @@ namespace BackstageManagement.Controllers
                         {
                             id = child.Id,
                             @checked = child.IsChecked,
-                            title = child.PermissionName
+                            title = child.Name
                         });
                     }
                 }
@@ -85,38 +85,38 @@ namespace BackstageManagement.Controllers
         public async Task<ActionResult> SavePermissionInfoByLoginNo(int employeeId, string checkedNode)
         {
             JsonResponse json = new JsonResponse();
-            try
-            {
-                var node = JsonConvert.DeserializeObject<List<TreeEntity>>(checkedNode);
-                List<Employee_Permission> employee_Permissions = new List<Employee_Permission>();
-                foreach (var item in node)
-                {
-                    employee_Permissions.Add(new Employee_Permission() { 
-                        EmployeeId=employeeId,
-                        PermissionId=item.id
-                    });
-                    if (item.children!=null&&item.children.Count>0)
-                    {
-                        foreach (var child in item.children)
-                        {
-                            employee_Permissions.Add(new Employee_Permission()
-                            {
-                                EmployeeId = employeeId,
-                                PermissionId = child.id
-                            });
-                        }
-                    }
-                }
-                var res= await _employeePermissionServices.SavePermissionInfo(employeeId, employee_Permissions);
-                await _logServices.WriteSystemLog(LoginUser.Id, "保存权限", string.Format("信息={0}，结果:{1}", checkedNode, res));
-            }
-            catch (Exception ex)
-            {
-                await _logServices.WriteExceptionLog(LoginUser.Id, "保存权限", ex.ToString());
-                json.code = ResponseCode.Fail;
-                json.msg = "保存用户权限失败,"+ex.ToString();
-                return Json(json);
-            }
+            //try
+            //{
+            //    var node = JsonConvert.DeserializeObject<List<TreeEntity>>(checkedNode);
+            //    List<Employee_Permission> employee_Permissions = new List<Employee_Permission>();
+            //    foreach (var item in node)
+            //    {
+            //        employee_Permissions.Add(new Employee_Permission() { 
+            //            EmployeeId=employeeId,
+            //            PermissionId=item.id
+            //        });
+            //        if (item.children!=null&&item.children.Count>0)
+            //        {
+            //            foreach (var child in item.children)
+            //            {
+            //                employee_Permissions.Add(new Employee_Permission()
+            //                {
+            //                    EmployeeId = employeeId,
+            //                    PermissionId = child.id
+            //                });
+            //            }
+            //        }
+            //    }
+            //    var res= await _employeePermissionServices.SaveRolePermissions(employeeId, employee_Permissions);
+            //    await _logServices.WriteSystemLog(LoginUser.Id, "保存权限", string.Format("信息={0}，结果:{1}", checkedNode, res));
+            //}
+            //catch (Exception ex)
+            //{
+            //    await _logServices.WriteExceptionLog(LoginUser.Id, "保存权限", ex.ToString());
+            //    json.code = ResponseCode.Fail;
+            //    json.msg = "保存用户权限失败,"+ex.ToString();
+            //    return Json(json);
+            //}
             return Json(json);
         }
     }
