@@ -7,10 +7,7 @@ using System.Threading.Tasks;
 
 namespace BackstageManagement.IRepository
 {
-    public interface IEmployeePermissionRepository:IBaseRepository<Employee_Permission>
+    public interface IRoleRepository:IBaseRepository<RoleEntity>
     {
-        Task<List<Employee_Permission>> QueryByLoginId(int employeeId);
-
-        
     }
 }

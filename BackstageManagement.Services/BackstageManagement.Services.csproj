@@ -42,8 +42,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BaseServices.cs" />
-    <Compile Include="EmployeePermissionServices.cs" />
-    <Compile Include="EmployeeServices.cs" />
+    <Compile Include="RolePermissionServices.cs" />
+    <Compile Include="RoleServices.cs" />
+    <Compile Include="SystemUserServices.cs" />
     <Compile Include="InfoConfigServices.cs" />
     <Compile Include="LogServices.cs" />
     <Compile Include="PermissionServices.cs" />

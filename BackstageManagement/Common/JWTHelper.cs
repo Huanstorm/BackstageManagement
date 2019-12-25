@@ -6,7 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-
+using BackstageManagement.Common;
 namespace BackstageManagement
 {
     public class JWTHelper
@@ -19,13 +19,14 @@ namespace BackstageManagement
         /// </summary>
         /// <param name="payload">不敏感的用户数据</param>
         /// <returns></returns>
-        public static string SetJwtEncode(EmployeeEntity payload)
+        public static string SetJwtEncode(EmployeeEntity entity, int expire = 15)
         {
+            var userInfo = new UserInfo() { exp = CommonHelper.GetTimeStamp ()+ expire }.UpdateInfoByClass<UserInfo, EmployeeEntity>(entity);
             IJwtAlgorithm algorithm = new HMACSHA256Algorithm();
             IJsonSerializer serializer = new JsonNetSerializer();
             IBase64UrlEncoder urlEncoder = new JwtBase64UrlEncoder();
             IJwtEncoder encoder = new JwtEncoder(algorithm, serializer, urlEncoder);
-            return encoder.Encode(payload, secret);
+            return encoder.Encode(userInfo, secret);
         }
 
         /// <summary>
@@ -38,11 +39,21 @@ namespace BackstageManagement
             if (String.IsNullOrEmpty(token)) return null;
             IJsonSerializer serializer = new JsonNetSerializer();
             IDateTimeProvider provider = new UtcDateTimeProvider();
-            IJwtValidator validator = new JwtValidator(serializer,provider);
+            IJwtValidator validator = new JwtValidator(serializer, provider);
             IBase64UrlEncoder urlEncoder = new JwtBase64UrlEncoder();
             IJwtDecoder decoder = new JwtDecoder(serializer, validator, urlEncoder);
-            return decoder.DecodeToObject<EmployeeEntity>(token, secret, true);
+            var userInfo = decoder.DecodeToObject<UserInfo>(token, secret, true);
+            return new EmployeeEntity().UpdateInfoByClass<EmployeeEntity, UserInfo>(userInfo);
         }
 
+    }
+
+    public class UserInfo
+    {
+        public int Id { get; set; }
+        public string LoginNo { get; set; }
+        public string LoginName { get; set; }
+        public int EmployeeType { get; set; }
+        public int exp { get; set; }
     }
 }

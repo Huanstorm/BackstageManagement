@@ -11,8 +11,8 @@ namespace BackstageManagement.Controllers
 {
     public class HomeController : BaseController
     {
-        public HomeController(IEmployeePermissionServices employeePermissionServices, 
-            ILogServices logServices) : base(employeePermissionServices,logServices)
+        public HomeController(IRolePermissionServices rolePermissionServices, 
+            ILogServices logServices) : base(rolePermissionServices, logServices)
         {
             
         }

@@ -1,6 +1,7 @@
 ﻿using BackstageManagement.Common;
 using BackstageManagement.FilterAttribute;
 using BackstageManagement.IServices;
+using BackstageManagement.Model;
 using BackstageManagement.Model.Models;
 using System;
 using System.Linq;
@@ -17,18 +18,18 @@ namespace BackstageManagement.Controllers
     /// </summary>    
     public class BaseController:Controller
     {
-        public IEmployeePermissionServices _employeePermissionServices;
+        public IRolePermissionServices _rolePermissionServices;
         public ILogServices _logServices;
-        public BaseController(IEmployeePermissionServices employeePermissionServices,ILogServices logServices) {
-            _employeePermissionServices = employeePermissionServices;
+        public BaseController(IRolePermissionServices rolePermissionServices, ILogServices logServices) {
+            _rolePermissionServices = rolePermissionServices;
             _logServices = logServices;
         }
         public string Path { get; set; }
-        private EmployeeEntity _loginUser;
+        private SystemUserEntity _loginUser;
         /// <summary>
         /// 登录用户信息
         /// </summary>
-        public EmployeeEntity LoginUser
+        public SystemUserEntity LoginUser
         {
             get
             {
@@ -65,7 +66,7 @@ namespace BackstageManagement.Controllers
             {
                 if (LoginUser != null)
                 {
-                    ViewBag.UserName = LoginUser.LoginName;
+                    ViewBag.UserName = LoginUser.RealName;
                 }
                 this.Path = requestContext.HttpContext.Request.FilePath;
                 Task.Run(() => SetMenu()).Wait();
@@ -76,11 +77,11 @@ namespace BackstageManagement.Controllers
         /// </summary>
         private async Task SetMenu()
         {
-            if (IsLogin() && !string.IsNullOrEmpty(this.LoginUser.LoginNo))
+            if (IsLogin() && !string.IsNullOrEmpty(this.LoginUser.LoginName))
             {
                 StringBuilder sb = new StringBuilder();
-                var list =await _employeePermissionServices.QueryByEmployeeId(LoginUser.Id);
-                list = list.Where(c => c.Permission != null).ToList(); ;
+                var list =await _rolePermissionServices.QueryByRoleId(LoginUser.RoleId.Value);
+                list = list.Where(c => c.Permission != null&&c.Permission.Type==PermissionType.Menu).ToList();
                 if (list != null)
                 {
                     foreach (var parent in list.Where(a => a.Permission.ParentId == null || a.Permission.ParentId == 0))
@@ -93,21 +94,21 @@ namespace BackstageManagement.Controllers
                         var childCount = list.Where(a => a.Permission.ParentId == parent.PermissionId).Count();
                         if (childCount == 0)
                         {
-                            parentFlag = parent.Permission.PermissionUrl.ToLower() == this.Path.ToLower();
+                            parentFlag = parent.Permission.Url.ToLower() == this.Path.ToLower();
                         }
                         foreach (var child in list.Where(a => a.Permission.ParentId == parent.PermissionId))
                         {
-                            flag = child.Permission.PermissionUrl.ToLower() == this.Path.ToLower();
+                            flag = child.Permission.Url.ToLower() == this.Path.ToLower();
                             if (flag)
                             {
                                 exists = true;
                             }
-                            sbChild.AppendFormat("<dd {0}><a href=\"{1}\">{2}</a></dd>", flag ? "class=\"layui-this\"" : "", string.IsNullOrEmpty(child.Permission.PermissionUrl) ? "javascript:void(0)" : child.Permission.PermissionUrl, child.Permission.PermissionName);
+                            sbChild.AppendFormat("<dd {0}><a href=\"{1}\">{2}</a></dd>", flag ? "class=\"layui-this\"" : "", string.IsNullOrEmpty(child.Permission.Url) ? "javascript:void(0)" : child.Permission.Url, child.Permission.Name);
                         }
                         sbChild.AppendFormat("</dl>");
 
                         sb.AppendFormat("<li class=\"layui-nav-item {0}\">", exists ? "layui-nav-itemed" : (parentFlag ? "layui-this" : ""));
-                        sb.AppendFormat("<a href=\"{0}\">{1}</a>", childCount != 0 ? "javascript:void(0);" : parent.Permission.PermissionUrl, parent.Permission.PermissionName);
+                        sb.AppendFormat("<a href=\"{0}\">{1}</a>", childCount != 0 ? "javascript:void(0);" : parent.Permission.Url, parent.Permission.Name);
                         sb.Append(childCount != 0 ? sbChild.ToString() : "");
                         sb.AppendFormat("</li>");
                     }

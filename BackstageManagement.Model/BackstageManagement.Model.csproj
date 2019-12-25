@@ -48,7 +48,9 @@
     <Compile Include="Context\DbContext.cs" />
     <Compile Include="Context\DbSend.cs" />
     <Compile Include="Context\DbSet.cs" />
-    <Compile Include="Models\EmployeeEntity.cs" />
+    <Compile Include="Models\RoleEntity.cs" />
+    <Compile Include="Models\RolePermissionEntity.cs" />
+    <Compile Include="Models\SystemUserEntity.cs" />
     <Compile Include="Models\Employee_Permission.cs" />
     <Compile Include="Models\InfoConfigEntity.cs" />
     <Compile Include="JsonResponse.cs" />
