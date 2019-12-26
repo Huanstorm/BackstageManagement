@@ -23,7 +23,7 @@ namespace BackstageManagement.Controllers
 
         public async Task<ActionResult> Index()
         {
-            await Task.Run(() => { });
+            await Task.Run(() => { }).ConfigureAwait(false);
             return View();
         }
         /// <summary>
@@ -41,7 +41,7 @@ namespace BackstageManagement.Controllers
             JsonResponse result = new JsonResponse();
             try
             {
-                List<LogEntity> logs =await _logServices.GetAll();
+                List<LogEntity> logs =await _logServices.GetAll().ConfigureAwait(false);
                 if (logtype != null)
                 {
                     logs = logs.Where(c => c.LogType == (LogType)logtype).ToList();
