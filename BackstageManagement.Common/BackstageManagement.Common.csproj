@@ -42,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ExtensionsMethod.cs" />
+    <Compile Include="Helper\ExpressionHelper.cs" />
     <Compile Include="Helper\CommonHelper.cs" />
     <Compile Include="Helper\XmlHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

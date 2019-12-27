@@ -5,6 +5,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -41,22 +42,29 @@ namespace BackstageManagement.Controllers
             JsonResponse result = new JsonResponse();
             try
             {
-                List<LogEntity> logs =await _logServices.GetAll().ConfigureAwait(false);
+
+                Expression<Func<LogEntity, bool>> pre = Common.ExpressionHelper.True<LogEntity>();
+                //List<LogEntity> logs =await _logServices.GetAll().ConfigureAwait(false);
                 if (logtype != null)
                 {
-                    logs = logs.Where(c => c.LogType == (LogType)logtype).ToList();
+                    //logs = logs.Where(c => c.LogType == (LogType)logtype).ToList();
+                    pre = pre.And(s => s.LogType == (LogType)logtype);
                 }
                 if (!string.IsNullOrEmpty(daterange))
                 {
                     var startDate = Convert.ToDateTime(daterange.Split('~')[0].Trim());
                     var endDate = Convert.ToDateTime(daterange.Split('~')[1].Trim()).AddDays(1);
-                    logs = logs.Where(c => c.CreationTime >= startDate && c.CreationTime <= endDate).ToList();
+                    //logs = logs.Where(c => c.CreationTime >= startDate && c.CreationTime <= endDate).ToList();
+                    pre = pre.And(c => c.CreationTime >= startDate && c.CreationTime <= endDate);
+
                 }
                 if (!string.IsNullOrEmpty(condition))
                 {
-                    logs = logs.Where(c => c.LogFunction.Contains(condition) || c.LogContent.Contains(condition)).ToList();
+                    //logs = logs.Where(c => c.LogFunction.Contains(condition) || c.LogContent.Contains(condition)).ToList();
+                    pre = pre.And(c => c.LogFunction.Contains(condition) || c.LogContent.Contains(condition));
                 }
-                logs = logs.OrderByDescending(c => c.CreationTime).ToList();
+                //logs = logs.OrderByDescending(c => c.CreationTime).ToList();
+                var logs = await _logServices.Query(pre).ConfigureAwait(false);
                 foreach (var item in logs)
                 {
                     var user =await _employeeServices.QueryById(item.UserId);
