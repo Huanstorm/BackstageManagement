@@ -11,10 +11,10 @@ using BackstageManagement.Model.Models;
 
 namespace BackstageManagement.Controllers
 {
-    public class User_PermissionController : BaseController
+    public class RolePermissionController : BaseController
     {
         private readonly IPermissionServices _permissionServices;
-        public User_PermissionController(IRolePermissionServices rolePermissionServices, 
+        public RolePermissionController(IRolePermissionServices rolePermissionServices, 
             IPermissionServices permissionServices,
             ILogServices logServices) : base(rolePermissionServices, logServices)
         {
@@ -31,14 +31,14 @@ namespace BackstageManagement.Controllers
         /// </summary>
         /// <param name="loginNo"></param>
         /// <returns></returns>
-        public async Task<ActionResult> QueryPermissionInfoById(int employeeId)
+        public async Task<ActionResult> QueryPermissionInfoById(int roleId)
         {
             JsonResponse result = new JsonResponse();
             try
             {
                 List<TreeEntity> tree = new List<TreeEntity>();
-                var Permissions =await _permissionServices.GetAll();
-                var userPermission =await _rolePermissionServices.QueryByRoleId(employeeId);
+                var Permissions =await _permissionServices.Query(c=>!c.IsDeleted);
+                var userPermission =await _rolePermissionServices.QueryByRoleId(roleId);
                 foreach (var item in userPermission)
                 {
                     foreach (var per in Permissions)

@@ -140,26 +140,7 @@ namespace BackstageManagement.Controllers
                 return Json(result);
             }
         }
-        /// <summary>
-        /// 获取管理用户信息
-        /// </summary>
-        /// <returns></returns>
-        public async Task<ActionResult> QueryAdminUserInfo()
-        {
-            JsonResponse result = new JsonResponse();
-            try
-            {
-                var users =await _systemUserServices.Query(c => c.IsDeleted==false);
-                result.data = users;
-            }
-            catch (Exception ex)
-            {
-                result.code = ResponseCode.Fail;
-                result.msg = "获取管理员用户信息异常，" + ex.ToString();
-                await _logServices.WriteExceptionLog(LoginUser.Id, "获取用户信息", ex.ToString());
-            }
-            return Json(result);
-        }
+        
         /// <summary>
         /// 退出系统
         /// </summary>

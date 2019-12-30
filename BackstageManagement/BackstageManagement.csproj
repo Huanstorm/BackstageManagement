@@ -145,7 +145,7 @@
     <Compile Include="Controllers\PermissionController.cs" />
     <Compile Include="Controllers\RoleController.cs" />
     <Compile Include="Controllers\UserController.cs" />
-    <Compile Include="Controllers\User_PermissionController.cs" />
+    <Compile Include="Controllers\RolePermissionController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -302,7 +302,7 @@
     <Content Include="Views\User\Index.cshtml" />
     <Content Include="Views\Permission\Index.cshtml" />
     <Content Include="Views\InfoConfig\Index.cshtml" />
-    <Content Include="Views\User_Permission\Index.cshtml" />
+    <Content Include="Views\RolePermission\Index.cshtml" />
     <Content Include="Views\Log\Index.cshtml" />
     <Content Include="Views\ErrorHandler\Index.cshtml" />
     <Content Include="Views\Login\Index.cshtml" />
