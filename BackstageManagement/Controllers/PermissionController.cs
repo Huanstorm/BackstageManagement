@@ -37,7 +37,7 @@ namespace BackstageManagement.Controllers
             JsonResponse result = new JsonResponse();
             try
             {
-                var permissions =await _permissionServices.GetAll();
+                var permissions =await _permissionServices.Query(c=>!c.IsDeleted);
                 foreach (var item in permissions)
                 {
                     var permission =await _permissionServices.GetSingle(c=>c.Id== item.ParentId);
@@ -70,7 +70,7 @@ namespace BackstageManagement.Controllers
             try
             {
                 PermissionEntity entity = JsonConvert.DeserializeObject<PermissionEntity>(param);
-                entity.ModifyTime = DateTime.Now;
+                entity.CreationTime = DateTime.Now;
                 var res =await _permissionServices.Add(entity);
                 await _logServices.WriteSystemLog(LoginUser.Id, "添加权限菜单", string.Format("信息={0}，结果:{1}", param, res));
             }
@@ -92,7 +92,9 @@ namespace BackstageManagement.Controllers
             JsonResponse result = new JsonResponse();
             try
             {
-                var res =await _permissionServices.DeleteById(Id);
+                var entity =await _permissionServices.QueryById(Id);
+                entity.IsDeleted = true;
+                var res=await _permissionServices.Update(entity);
                 await _logServices.WriteSystemLog(LoginUser.Id, "删除权限菜单", string.Format("信息={0}，结果:{1}", Id, res));
             }
             catch (Exception ex)
@@ -114,6 +116,8 @@ namespace BackstageManagement.Controllers
             try
             {
                 var entity = JsonConvert.DeserializeObject<PermissionEntity>(param);
+                var oldEntity = await _permissionServices.QueryById(entity.Id);
+                entity.CreationTime = oldEntity.CreationTime;
                 entity.ModifyTime = DateTime.Now;
                 var res =await _permissionServices.Update(entity);
                 await _logServices.WriteSystemLog(LoginUser.Id, "编辑权限菜单", string.Format("编辑菜单，信息={0}，结果:{1}", param, res));
@@ -135,7 +139,7 @@ namespace BackstageManagement.Controllers
             JsonResponse result = new JsonResponse();
             try
             {
-                var entitys =await _permissionServices.GetAll();
+                var entitys =await _permissionServices.Query(c=>!c.IsDeleted);
                 result.data = entitys;
             }
             catch (Exception ex)

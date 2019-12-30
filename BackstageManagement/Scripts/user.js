@@ -83,7 +83,6 @@
                             $("#password").val(data.Password);
 
                             form.render();
-                            form.render();
                         }
                     });
                     
@@ -98,6 +97,7 @@
                         var password = $("#password").val();
                         var roleId = $("#userRole").val();
                         var remark = $("#remark").val();
+                        entity.Id = data.Id;
                         entity.loginName = loginName;
                         entity.realName = realName;
                         entity.password = password;

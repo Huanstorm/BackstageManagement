@@ -6,7 +6,7 @@
     </div>
     <div class="layui-card-body">
         <div class="layui-row" style="text-align:left">
-            <button class="layui-btn" id="btnAddPermission">
+            <button class="layui-btn" id="btnadd">
                 <i class="layui-icon layui-icon-add-circle"></i>
                 添加
             </button>
@@ -30,42 +30,46 @@
             </a>
         </div>
     </script>
-    <script type="text/html" id="addPermission">
+    <script type="text/html" id="typeTpl">
+        <input type="button" class="layui-btn layui-btn-xs {{d.Type==1? 'layui-btn-normal':'layui-btn-warm'}}" value="{{d.Type==1?"菜单":"按钮"}}" />
+    </script>
+    <script type="text/html" id="permission">
         <div style="margin:15px 25px 0px 0px">
             <form class="layui-form">
                 <div class="layui-form-item">
                     <div class="layui-inline">
                         <label class="layui-form-label">菜单名称</label>
                         <div class="layui-input-inline">
-                            <input type="text" id="permissionName" required lay-verify="required" placeholder="输入菜单名称" class="layui-input" />
+                            <input type="text" id="name" required lay-verify="required" placeholder="输入菜单名称" class="layui-input" />
                         </div>
                     </div>
                     <div class="layui-inline">
                         <label class="layui-form-label">菜单地址</label>
                         <div class="layui-input-inline">
-                            <input type="text" id="permissionUrl" placeholder="输入菜单地址" class="layui-input" />
+                            <input type="text" id="url" placeholder="输入菜单地址" class="layui-input" />
                         </div>
                     </div>
                 </div>
                 <div class="layui-form-item">
-                    <label class="layui-form-label">选择父级菜单</label>
-                    <div class="layui-input-block">
-                        <select id="parentPermissionName" lay-filter="parentName">
+                    <label class="layui-form-label">父级菜单</label>
+                    <div class="layui-input-block" style="width:515px">
+                        <select id="parentName" lay-filter="parentName">
                             <option value="">请选择</option>
                         </select>
                     </div>
 
                 </div>
                 <div class="layui-form-item">
-                    <label class="layui-form-label">菜单描述</label>
+                    <label class="layui-form-label">类型</label>
                     <div class="layui-input-block">
-                        <input id="permissionDescription" type="text" placeholder="输入菜单描述" class="layui-input" />
+                        <input type="radio" name="type" value="1" title="菜单" checked="">
+                        <input type="radio" name="type" value="2" title="按钮">
                     </div>
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label">备注</label>
                     <div class="layui-input-block">
-                        <input id="remark" type="text" placeholder="输入备注" class="layui-input" />
+                        <textarea id="remark" type="text" placeholder="输入备注" class="layui-textarea" style="width:515px"></textarea>
                     </div>
                 </div>
 

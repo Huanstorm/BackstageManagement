@@ -11,7 +11,7 @@ namespace BackstageManagement.Model
     public class JsonResponse
     {
         /// <summary>
-        /// 返回代码 0表示成功 1表示失败  2表示session过期
+        /// 返回代码 0表示成功 1表示失败
         /// </summary>
         public ResponseCode code { get; set; } = ResponseCode.Success;
         /// <summary>

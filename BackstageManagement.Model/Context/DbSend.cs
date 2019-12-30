@@ -42,7 +42,7 @@ namespace BackstageManagement.Model.Context
                         CreationTime =DateTime.Now,
                         IsDeleted=false,
                         Type=PermissionType.Menu,
-                        Description="控制台",
+                        Remark="控制台",
                     });
                     permissionEntities.Add(new PermissionEntity()
                     {
@@ -50,7 +50,7 @@ namespace BackstageManagement.Model.Context
                         CreationTime = DateTime.Now,
                         IsDeleted = false,
                         Type = PermissionType.Menu,
-                        Description = "用户角色管理",
+                        Remark = "用户角色管理",
                     });
                     permissionEntities.Add(new PermissionEntity()
                     {
@@ -60,7 +60,7 @@ namespace BackstageManagement.Model.Context
                         CreationTime = DateTime.Now,
                         IsDeleted = false,
                         Type = PermissionType.Menu,
-                        Description = "用户管理",
+                        Remark = "用户管理",
                     });
                     permissionEntities.Add(new PermissionEntity()
                     {
@@ -70,7 +70,7 @@ namespace BackstageManagement.Model.Context
                         CreationTime = DateTime.Now,
                         IsDeleted = false,
                         Type = PermissionType.Menu,
-                        Description = "角色管理",
+                        Remark = "角色管理",
                     });
                     permissionEntities.Add(new PermissionEntity()
                     {
@@ -80,7 +80,7 @@ namespace BackstageManagement.Model.Context
                         CreationTime = DateTime.Now,
                         IsDeleted = false,
                         Type = PermissionType.Menu,
-                        Description = "权限管理",
+                        Remark = "权限管理",
                     });
                     permissionEntities.Add(new PermissionEntity()
                     {
@@ -90,7 +90,7 @@ namespace BackstageManagement.Model.Context
                         CreationTime = DateTime.Now,
                         IsDeleted = false,
                         Type = PermissionType.Menu,
-                        Description = "角色权限分配",
+                        Remark = "角色权限分配",
                     });
                     dbContext.Db.Insertable(permissionEntities).ExecuteCommand();
                     //添加角色初始信息
@@ -100,7 +100,7 @@ namespace BackstageManagement.Model.Context
                         CreationTime=DateTime.Now,
                         IsDeleted=false,
                         IsEnabled=true,
-                        Description="拥有所有权限的角色"
+                        Remark="拥有所有权限的角色"
                     };
                     dbContext.Db.Insertable<RoleEntity>(role).ExecuteCommand();
                     //添加角色权限初始信息

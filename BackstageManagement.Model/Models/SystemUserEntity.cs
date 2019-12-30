@@ -38,5 +38,8 @@ namespace BackstageManagement.Model.Models
         [SugarColumn(IsNullable = true)]
         public int? ModifyUserId { get; set; }
 
+        [SugarColumn(IsIgnore = true)]
+        public RoleEntity Role { get; set; }
+
     }
 }

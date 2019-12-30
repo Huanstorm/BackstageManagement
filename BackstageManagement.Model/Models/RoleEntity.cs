@@ -16,11 +16,6 @@ namespace BackstageManagement.Model.Models
         [SugarColumn(Length =50,IsNullable =false)]
         public string Name { get; set; }
         /// <summary>
-        /// 角色描述
-        /// </summary>
-        [SugarColumn(Length = 200, IsNullable = true)]
-        public string Description { get; set; }
-        /// <summary>
         /// 是否激活
         /// </summary>
         [SugarColumn(IsNullable = true)]
@@ -35,5 +30,7 @@ namespace BackstageManagement.Model.Models
         /// </summary>
         [SugarColumn(IsNullable = true)]
         public int? ModifyUserId { get; set; }
+
+        
     }
 }

@@ -14,6 +14,7 @@ namespace BackstageManagement.IServices
         Task<List<TEntity>> Query(Expression<Func<TEntity,bool>> whereExpression);
 
         Task<List<TEntity>> GetAll();
+
         Task<TEntity> GetSingle(Expression<Func<TEntity,bool>> whereExpression);
 
         Task<int> Add(TEntity entity);

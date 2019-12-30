@@ -112,7 +112,17 @@ namespace BackstageManagement.Controllers
             try
             {
                 SystemUserEntity entity = JsonConvert.DeserializeObject<SystemUserEntity>(param);
+                var user = await _systemUserServices.GetSingle(c=>!c.IsDeleted&&c.LoginName==entity.LoginName&&c.Id!=entity.Id);
+                if (user!=null)
+                {
+                    result.code = ResponseCode.Fail;
+                    result.msg = "该用户已存在";
+                    return Json(result);
+                }
+                user = await _systemUserServices.QueryById(entity.Id);
                 entity.ModifyTime = DateTime.Now;
+                entity.CreationTime = user.CreationTime;
+                entity.CreateUserId = user.CreateUserId;
                 var res =await  _systemUserServices.Update(entity);
                 await _logServices.WriteSystemLog(LoginUser.Id, "编辑用户", string.Format("信息={0}，结果:{1}", param, res));
                 if (!res)

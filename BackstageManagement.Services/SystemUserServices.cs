@@ -20,12 +20,12 @@ namespace BackstageManagement.Services
 
         public async Task<SystemUserEntity> GetUserByLoginName(string loginNo,string password)
         {
-            return await _systemUserServices.GetSingle(c => c.LoginName == loginNo&&c.Password==password);
+            return await _systemUserServices.GetSingle(c => c.LoginName == loginNo&&c.Password==password&&!c.IsDeleted);
         }
 
         public async Task<int> AddEmployee(SystemUserEntity entity)
         {
-            var user =await _systemUserServices.GetSingle(c=>c.LoginName==entity.LoginName&&c.IsDeleted==false);
+            var user =await _systemUserServices.GetSingle(c=>c.LoginName==entity.LoginName&&!c.IsDeleted);
             if (user!=null)
             {
                 return -1;

@@ -32,13 +32,7 @@ namespace BackstageManagement.Model.Models
         /// <summary>
         /// 权限类型
         /// </summary>
-        public PermissionType Type { get; set; }
-        /// <summary>
-        /// 菜单描述
-        /// </summary>
-        [SugarColumn(IsNullable = true, Length = 200)]
-        public string Description { get; set; }
-        
+        public PermissionType Type { get; set; }       
 
         /// <summary>
         /// 是否选中

@@ -43,6 +43,11 @@ namespace BackstageManagement.Controllers
                     await _logServices.WriteSystemLog(LoginUser.Id, "登录", " 登录成功！");
                     return Json(result);//登录成功
                 }
+                else
+                {
+                    result.code = ResponseCode.Fail;
+                    result.msg = "用户名或密码错误";
+                }
 
             }
             catch (Exception ex)
