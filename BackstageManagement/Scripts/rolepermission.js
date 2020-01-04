@@ -36,7 +36,6 @@ layui.use(["table", "jquery", "tree", "layer"], function () {
                     id: 'permissionTree',
                     data: res.data
                 });
-
             }
             NProgress.done();
         }
@@ -68,11 +67,11 @@ layui.use(["table", "jquery", "tree", "layer"], function () {
     });
     $("#btnSave").click(function () {
         var checkData = tree.getChecked("permissionTree");
-
+        var loadindex = layer.load();
         $.ajax({
             url: '/RolePermission/SavePermissionInfoByLoginNo',
             data: {
-                employeeId: employeeId,
+                roleId: roleId,
                 checkedNode: JSON.stringify(checkData)
             },
             type: 'post',
@@ -81,7 +80,7 @@ layui.use(["table", "jquery", "tree", "layer"], function () {
                     $.ajax({
                         url: '/RolePermission/QueryPermissionInfoById',
                         data: {
-                            employeeId: employeeId
+                            roleId: roleId
                         },
                         type: 'POST',
                         dataType: 'json',
@@ -90,14 +89,20 @@ layui.use(["table", "jquery", "tree", "layer"], function () {
                                 tree.reload('permissionTree', {
                                     data: res.data
                                 });
-
+                                layer.close(loadindex);
+                                layer.msg("保存成功");
+                                console.log(res);
+                            }
+                            else {
+                                layer.close(loadindex);
+                                layer.alert(res.msg);
+                                
                             }
                         }
                     });
-                    layer.msg("保存成功。");
-                    console.log(res);
                 }
                 else {
+                    layer.close(loadindex);
                     layer.alert(res.msg);
                 }
             }

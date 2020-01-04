@@ -37,38 +37,37 @@ namespace BackstageManagement.Controllers
         /// <param name="daterange">日期范围</param>
         /// <param name="condition">查询条件</param>
         /// <returns></returns>
-        public async Task<ActionResult> GetLogInfo(int page, int limit, int? system, int? logtype, string daterange, string condition)
+        public async Task<ActionResult> GetLogs(int page, int limit, int? logtype, string daterange, string condition)
         {
             JsonResponse result = new JsonResponse();
             try
             {
-
-                Expression<Func<LogEntity, bool>> pre = Common.ExpressionHelper.True<LogEntity>();
-                //List<LogEntity> logs =await _logServices.GetAll().ConfigureAwait(false);
-                if (logtype != null)
-                {
-                    //logs = logs.Where(c => c.LogType == (LogType)logtype).ToList();
-                    pre = pre.And(s => s.LogType == (LogType)logtype);
-                }
-                if (!string.IsNullOrEmpty(daterange))
-                {
-                    var startDate = Convert.ToDateTime(daterange.Split('~')[0].Trim());
-                    var endDate = Convert.ToDateTime(daterange.Split('~')[1].Trim()).AddDays(1);
-                    //logs = logs.Where(c => c.CreationTime >= startDate && c.CreationTime <= endDate).ToList();
-                    pre = pre.And(c => c.CreationTime >= startDate && c.CreationTime <= endDate);
-
-                }
-                if (!string.IsNullOrEmpty(condition))
-                {
-                    //logs = logs.Where(c => c.LogFunction.Contains(condition) || c.LogContent.Contains(condition)).ToList();
-                    pre = pre.And(c => c.LogFunction.Contains(condition) || c.LogContent.Contains(condition));
-                }
-                //logs = logs.OrderByDescending(c => c.CreationTime).ToList();
-                var logs = await _logServices.Query(pre).ConfigureAwait(false);
+                //Expression<Func<LogEntity, bool>> pre = Common.ExpressionHelper.True<LogEntity>();
+                //if (logtype != null)
+                //{
+                //    pre = pre.And(s => s.LogType == (LogType)logtype);
+                //}
+                //if (!string.IsNullOrEmpty(daterange))
+                //{
+                //    var startDate = Convert.ToDateTime(daterange.Split('~')[0].Trim());
+                //    var endDate = Convert.ToDateTime(daterange.Split('~')[1].Trim()).AddDays(1);
+                //    //pre = pre.And(c => c.CreationTime >= "" && c.CreationTime <= endDate);
+                //}
+                //if (!string.IsNullOrEmpty(condition))
+                //{
+                //    pre = pre.And(c => c.LogFunction.Contains(condition) || c.LogContent.Contains(condition));
+                //}
+                var startDate = Convert.ToDateTime(daterange.Split('~')[0].Trim());
+                var endDate = Convert.ToDateTime(daterange.Split('~')[1].Trim()).AddDays(1);
+                var logs = await _logServices.Query(null);
+                logs = logs.AsQueryable().WhereIF(logtype != null, c => c.LogType == (LogType)logtype)
+                    .Where(c => c.CreationTime >= startDate && c.CreationTime <= endDate)
+                    .WhereIF(!string.IsNullOrEmpty(condition),c=>c.LogFunction.Contains(condition)||c.LogContent.Contains(condition)||c.LoginName.Contains(condition))
+                    .OrderByDescending(c => c.CreationTime).ToList();
                 foreach (var item in logs)
                 {
                     var user =await _employeeServices.QueryById(item.UserId);
-                    item.LoginName = user.LoginName;
+                    item.LoginName = user?.LoginName;
                 }
                 result.data = logs.Skip((page - 1) * limit).Take(limit).ToList();
                 result.count = logs.Count;
@@ -76,7 +75,7 @@ namespace BackstageManagement.Controllers
             catch (Exception ex)
             {
                 result.code = ResponseCode.Fail;
-                result.msg = "查询日志信息失败，" + ex.ToString();
+                result.msg = "查询日志失败，" + ex.ToString();
             }
             return Json(result);
         }

@@ -6,7 +6,7 @@
     var $ = layui.jquery;
     var tableindex = table.render({
         elem: "#roletable",
-        url: '/Role/GetRoles',
+        url: '/Role/GetRolesForList',
         method: 'post',
         height: 'full-210',
         cols: [[
@@ -26,16 +26,12 @@
         },
         page: true
     });
-    table.on('tool(usertable)', function (obj) {
+    table.on('tool(roletable)', function (obj) {
         var data = obj.data;
-        if (data.LoginNo === "admin") {
-            layer.alert("admin用户不能编辑或删除！");
-            return;
-        }
         if (obj.event === 'delete') {
-            layer.confirm("确定要删除该用户？", function (index) {
+            layer.confirm("确定要删除该角色？", function (index) {
                 $.ajax({
-                    url: '/User/DeleteUser',
+                    url: '/Role/DeleteRole',
                     data: {
                         Id: data.Id
                     },
@@ -58,52 +54,33 @@
                 type: 1,
                 area: ['680px', '400px'],
                 title: '编辑员工信息',
-                content: $('#userInfo').html(),
+                content: $('#roleInfo').html(),
                 success: function (layero, index) {
                     layero.addClass('layui-form');
                     layero.find('.layui-layer-btn0').attr('lay-filter', 'formVerify').attr('lay-submit', '');
-                    $.ajax({
-                        url: '/Role/GetRoles',
-                        type: 'post',
-                        dataType: 'json',
-                        success: function (res) {
-                            if (res.code === 0) {
-                                $.each(res.data, function (index, item) {
-                                    $('#userRole').append(new Option(item.Name, item.Id));
-                                });
-                            }
-                            else {
-                                layer.alert(res.msg);
-                            }
-                            $("#loginName").val(data.LoginName);
-                            $("#realName").val(data.RealName);
-                            $("#userRole").val(data.RoleId);
-                            $("#remark").val(data.Remark);
-                            $("#password").val(data.Password);
-
-                            form.render();
-                            form.render();
-                        }
-                    });
-
-
+                    $("#roleName").val(data.Name);
+                    if (data.IsEnabled) {
+                        $("#isEnabled").attr("checked", true);
+                    }
+                    else {
+                        $("#isEnabled").attr("checked", false);
+                    }
+                    $("#remark").val(data.Remark);
+                    form.render();
                 },
                 btn: ['保存', '取消'],
                 yes: function (index, layero) {
                     form.on('submit(formVerify)', function () {
                         var entity = {};
-                        var loginName = $("#loginName").val();
-                        var realName = $("#realName").val();
-                        var password = $("#password").val();
-                        var roleId = $("#userRole").val();
+                        var name = $("#roleName").val();
+                        var isEnabled = $("#isEnabled").is(":checked");
                         var remark = $("#remark").val();
-                        entity.loginName = loginName;
-                        entity.realName = realName;
-                        entity.password = password;
-                        entity.roleId = roleId;
+                        entity.id = data.Id;
+                        entity.name = name;
+                        entity.isEnabled = isEnabled;
                         entity.remark = remark;
                         $.ajax({
-                            url: '/User/EditUserInfo',
+                            url: '/Role/EditRole',
                             data: {
                                 param: JSON.stringify(entity)
                             },
@@ -141,14 +118,14 @@
             yes: function (index, layero) {
                 form.on('submit(formVerify)', function () {
                     var entity = {};
-                    var roleName = $("#roleName").val();
+                    var name = $("#roleName").val();
                     var isEnabled = $("#isEnabled").is(":checked");
                     var remark = $("#remark").val();
-                    entity.roleName = roleName;
+                    entity.name = name;
                     entity.isEnabled = isEnabled;
                     entity.remark = remark;
                     $.ajax({
-                        url: '/Role/AddUserInfo',
+                        url: '/Role/AddRole',
                         data: {
                             param: JSON.stringify(entity)
                         },

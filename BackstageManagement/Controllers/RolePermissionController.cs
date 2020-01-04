@@ -82,41 +82,44 @@ namespace BackstageManagement.Controllers
         /// <param name="employeeId"></param>
         /// <param name="checkedNode"></param>
         /// <returns></returns>
-        public async Task<ActionResult> SavePermissionInfoByLoginNo(int employeeId, string checkedNode)
+        public async Task<ActionResult> SavePermissionInfoByLoginNo(int roleId, string checkedNode)
         {
             JsonResponse json = new JsonResponse();
-            //try
-            //{
-            //    var node = JsonConvert.DeserializeObject<List<TreeEntity>>(checkedNode);
-            //    List<Employee_Permission> employee_Permissions = new List<Employee_Permission>();
-            //    foreach (var item in node)
-            //    {
-            //        employee_Permissions.Add(new Employee_Permission() { 
-            //            EmployeeId=employeeId,
-            //            PermissionId=item.id
-            //        });
-            //        if (item.children!=null&&item.children.Count>0)
-            //        {
-            //            foreach (var child in item.children)
-            //            {
-            //                employee_Permissions.Add(new Employee_Permission()
-            //                {
-            //                    EmployeeId = employeeId,
-            //                    PermissionId = child.id
-            //                });
-            //            }
-            //        }
-            //    }
-            //    var res= await _employeePermissionServices.SaveRolePermissions(employeeId, employee_Permissions);
-            //    await _logServices.WriteSystemLog(LoginUser.Id, "保存权限", string.Format("信息={0}，结果:{1}", checkedNode, res));
-            //}
-            //catch (Exception ex)
-            //{
-            //    await _logServices.WriteExceptionLog(LoginUser.Id, "保存权限", ex.ToString());
-            //    json.code = ResponseCode.Fail;
-            //    json.msg = "保存用户权限失败,"+ex.ToString();
-            //    return Json(json);
-            //}
+            try
+            {
+                var node = JsonConvert.DeserializeObject<List<TreeEntity>>(checkedNode);
+                List<RolePermissionEntity> rolePermissions = new List<RolePermissionEntity>();
+                foreach (var item in node)
+                {
+                    rolePermissions.Add(new RolePermissionEntity()
+                    {
+                        RoleId = roleId,
+                        PermissionId = item.id,
+                        CreationTime=DateTime.Now
+                    });
+                    if (item.children != null && item.children.Count > 0)
+                    {
+                        foreach (var child in item.children)
+                        {
+                            rolePermissions.Add(new RolePermissionEntity()
+                            {
+                                RoleId = roleId,
+                                PermissionId = child.id,
+                                CreationTime=DateTime.Now
+                            });
+                        }
+                    }
+                }
+                var res = await _rolePermissionServices.SaveRolePermissions(roleId, rolePermissions);
+                await _logServices.WriteSystemLog(LoginUser.Id, "保存权限", string.Format("信息={0}，结果:{1}", checkedNode, res));
+            }
+            catch (Exception ex)
+            {
+                await _logServices.WriteExceptionLog(LoginUser.Id, "保存权限", ex.ToString());
+                json.code = ResponseCode.Fail;
+                json.msg = "保存用户权限失败," + ex.ToString();
+                return Json(json);
+            }
             return Json(json);
         }
     }

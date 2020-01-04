@@ -25,6 +25,8 @@ namespace BackstageManagement.Model.Models
         /// </summary>
         [SugarColumn(IsIgnore = true)]
         public PermissionEntity Permission { get; set; }
+        [SugarColumn(IsIgnore = true)]
+        public RoleEntity Role { get; set; }
 
     }
 }
