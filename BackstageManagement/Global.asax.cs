@@ -29,13 +29,27 @@ namespace BackstageManagement
             builder.RegisterControllers(typeof(MvcApplication).Assembly).PropertiesAutowired();
             var basepath = AppDomain.CurrentDomain.RelativeSearchPath;
 
-            builder.Register<ISqlSugarClient>(c => new SqlSugarClient(new ConnectionConfig
+            builder.Register<ISqlSugarClient>(c =>
             {
-                ConnectionString = ConfigurationManager.ConnectionStrings["conn"].ToString(),
-                DbType = DbType.MySql,
-                InitKeyType = InitKeyType.Attribute,
-                IsAutoCloseConnection = true,
-            }));
+                var sqlSugarClient = new SqlSugarClient(new ConnectionConfig
+                {
+                    ConnectionString = ConfigurationManager.ConnectionStrings["conn"].ToString(),
+                    DbType = DbType.MySql,
+                    InitKeyType = InitKeyType.Attribute,
+                    IsAutoCloseConnection = true,
+                });
+
+                sqlSugarClient.Aop.OnError = (ex) =>
+                {
+                    sqlSugarClient.Ado.ExecuteCommand("insert into(execsql, parameters, createtime) values(@execsql, @parameters, @createtime)",
+                        new SugarParameter[] {
+                            new SugarParameter("@execsql",ex.Sql),
+                            new SugarParameter("@parameters",Newtonsoft.Json.JsonConvert.SerializeObject(ex.Parametres)),
+                            new SugarParameter("@createtime",DateTime.Now),
+                        });
+                };
+                return sqlSugarClient;
+            });
             var repositoryDllFile = Path.Combine(basepath, "BackstageManagement.Repository.dll");
             var assemblysRepository = Assembly.LoadFrom(repositoryDllFile);
             builder.RegisterAssemblyTypes(assemblysRepository).AsImplementedInterfaces();
