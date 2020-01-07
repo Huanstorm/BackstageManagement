@@ -12,5 +12,8 @@ namespace BackstageManagement.Common
         public static Expression<Func<T, bool>> True<T>() => c => true;
 
         public static Expression<Func<T, bool>> False<T>() => c => false;
+
+        public static SqlSugar.Expressionable<T> Expressionable<T>() where T : class, new() => SqlSugar.Expressionable.Create<T>();
+    
     }
 }
