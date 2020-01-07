@@ -1,0 +1,82 @@
+﻿<div class="layui-card">
+    <div class="layui-card-header">
+        日志
+    </div>
+    <div class="layui-card-body">
+        <div class="layui-row">
+            <div class="layui-form">
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <select id="logtype">
+                            <option value="">选择日志类型</option>
+                            <option value="1">系统日志</option>
+                            <option value="2">异常日志</option>
+                        </select>
+                    </div>
+                    <div class="layui-inline" style="width:240px">
+                        <input class="layui-input" type="text" placeholder="请选择" id="date" />
+                    </div>
+                    <div class="layui-inline">
+                        <input id="condition" type="text" class="layui-input" placeholder="模糊查询" />
+                    </div>
+                    <div class="layui-inline">
+                        <button class="layui-btn" id="btnSearch" title="查询">
+                            <i class="layui-icon layui-icon-search"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <table class="layui-hide" id="logtable" lay-filter="logtable"></table>
+    </div>
+</div>
+
+@section head{
+    <script type="text/html" id="buttonTpl">
+        <input disabled type="button" value="{{d.LogTypeString}}" class="layui-btn layui-btn-xs layui-btn-radius {{d.LogType==1?'layui-btn-normal':'layui-btn-danger'}}" />
+    </script>
+    <script type="text/html" id="operationTpl">
+        <div>
+            <a class="layui-btn layui-btn-xs" lay-event="detail">
+                <i class="layui-icon layui-icon-more"></i>详情
+            </a>
+        </div>
+    </script>
+    <script type="text/html" id="details">
+        <div style="margin:15px 30px 15px 0px">
+            <div class="layui-form-item">
+                <label class="layui-form-label">日志类型</label>
+                <div class="layui-input-block">
+                    <input id="logTypeString" class="layui-input" disabled />
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">登录名</label>
+                <div class="layui-input-block">
+                    <input id="loginNo" class="layui-input" disabled />
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">日志功能</label>
+                <div class="layui-input-block">
+                    <input id="logFunction" class="layui-input" disabled />
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">日志内容</label>
+                <div class="layui-input-block">
+                    <textarea style="height:200px" id="logContent" class="layui-textarea" disabled />
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">创建时间</label>
+                <div class="layui-input-block">
+                    <input id="creationTimeString" class="layui-input" disabled />
+                </div>
+            </div>
+        </div>
+    </script>
+    <script type="text/javascript" src="../Scripts/log.js"></script>
+}
+
+
