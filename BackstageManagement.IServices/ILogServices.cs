@@ -11,5 +11,7 @@ namespace BackstageManagement.IServices
     {
         Task WriteSystemLog(int loginId, string function, string content);
         Task WriteExceptionLog(int loginId, string function, string content);
+
+        Task<List<LogEntity>> QueryLogs(int? logType, DateTime startDate, DateTime endDate, string condition);
     }
 }

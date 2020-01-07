@@ -42,38 +42,15 @@ namespace BackstageManagement.Controllers
             JsonResponse result = new JsonResponse();
             try
             {
-                //Expression<Func<LogEntity, bool>> pre = Common.ExpressionHelper.True<LogEntity>();
-                //if (logtype != null)
-                //{
-                //    pre = pre.And(s => s.LogType == (LogType)logtype);
-                //}
-                //if (!string.IsNullOrEmpty(daterange))
-                //{
-                //    var startDate = Convert.ToDateTime(daterange.Split('~')[0].Trim());
-                //    var endDate = Convert.ToDateTime(daterange.Split('~')[1].Trim()).AddDays(1);
-                //    //pre = pre.And(c => c.CreationTime >= "" && c.CreationTime <= endDate);
-                //}
-                //if (!string.IsNullOrEmpty(condition))
-                //{
-                //    pre = pre.And(c => c.LogFunction.Contains(condition) || c.LogContent.Contains(condition));
-                //}
-                //var startDate = Convert.ToDateTime(daterange.Split('~')[0].Trim());
-                //var endDate = Convert.ToDateTime(daterange.Split('~')[1].Trim()).AddDays(1);
-                //var logs = await _logServices.Query(null);
-                //logs = logs.AsQueryable().WhereIF(logtype != null, c => c.LogType == (LogType)logtype)
-                //    .Where(c => c.CreationTime >= startDate && c.CreationTime <= endDate)
-                //    .WhereIF(!string.IsNullOrEmpty(condition), c => c.LogFunction.Contains(condition) || c.LogContent.Contains(condition) || c.LoginName.Contains(condition))
-                //    .OrderByDescending(c => c.CreationTime).ToList();
-                //foreach (var item in logs)
-                //{
-                //    var user =await _employeeServices.QueryById(item.UserId);
-                //    item.LoginName = user?.LoginName;
-                //}
-                var expressionable = SqlSugar.Expressionable.Create<LogEntity>();
-                expressionable.AndIF(logtype != null, c => c.LogType == (LogType)logtype)
-                    .AndIF(!string.IsNullOrEmpty(daterange), c => c.CreationTime >= Convert.ToDateTime(daterange.Split('~')[0].Trim()) && c.CreationTime <= Convert.ToDateTime(daterange.Split('~')[1].Trim()).AddDays(1))
-                    .AndIF(!string.IsNullOrEmpty(condition), c => c.LogFunction.Contains(condition) || c.LogContent.Contains(condition));
-                var logs = await _logServices.Query(expressionable.ToExpression()).ConfigureAwait(false);
+                DateTime startDate = DateTime.Today;
+                DateTime endDate = DateTime.Today.AddDays(1);
+                if (!string.IsNullOrEmpty(daterange))
+                {
+                    startDate = Convert.ToDateTime(daterange.Split('~')[0].Trim());
+                    endDate = Convert.ToDateTime(daterange.Split('~')[1].Trim()).AddDays(1);
+                }
+               
+                var logs = await _logServices.QueryLogs(logtype,startDate,endDate,condition).ConfigureAwait(false);
                 logs = logs.OrderByDescending(c => c.CreationTime).ToList();
                 foreach (var item in logs)
                 {
