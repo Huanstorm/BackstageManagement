@@ -9,6 +9,6 @@ namespace BackstageManagement.IServices
 {
     public interface IRoleServices:IBaseServices<RoleEntity>
     {
-
+        Task<int> AddRole(RoleEntity entity);
     }
 }

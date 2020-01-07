@@ -18,8 +18,11 @@ namespace BackstageManagement.Repository
 
         public async Task<List<RolePermissionEntity>> QueryByRoleId(int roleId)
         {
-            var list =await Db.Queryable<RolePermissionEntity>().Mapper(it => it.Permission, it => it.PermissionId).ToListAsync();
-            return list.Where(c=>c.RoleId== roleId&&!c.IsDeleted).ToList();
+            var list =await Db.Queryable<RolePermissionEntity>()
+                .Where(c => c.RoleId == roleId && !c.IsDeleted)
+                .Mapper(it => it.Permission, it => it.PermissionId)
+                .Mapper(it=>it.Role,it=>it.RoleId).ToListAsync();
+            return list;
         }
 
     }

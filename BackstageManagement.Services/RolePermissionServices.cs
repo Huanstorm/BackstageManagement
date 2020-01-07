@@ -11,16 +11,16 @@ namespace BackstageManagement.Services
 {
     public class RolePermissionServices : BaseServices<RolePermissionEntity>, IRolePermissionServices
     {
-        readonly IRolePermissionRepository _dal;
+        readonly IRolePermissionRepository _rolePermissionRepository;
         readonly IUnitOfWork _unitOfWork;
-        public RolePermissionServices(IRolePermissionRepository dal,IUnitOfWork unitOfWork) {
-            _dal = dal;
-            base.BaseDal = dal;
+        public RolePermissionServices(IRolePermissionRepository rolePermissionRepository,IUnitOfWork unitOfWork) {
+            _rolePermissionRepository = rolePermissionRepository;
+            base.BaseDal = rolePermissionRepository;
             _unitOfWork = unitOfWork;
         }
         public async Task<List<RolePermissionEntity>> QueryByRoleId(int roleId)
         {
-            return await _dal.QueryByRoleId(roleId);
+            return await _rolePermissionRepository.QueryByRoleId(roleId);
         }
 
         public async Task<int> SaveRolePermissions(int roleId, List<RolePermissionEntity> rolePermissions)
@@ -35,7 +35,8 @@ namespace BackstageManagement.Services
                     RolePermissionEntity ep = new RolePermissionEntity();
                     ep.RoleId = roleId;
                     ep.PermissionId = item.PermissionId;
-                    await _dal.Add(ep);
+                    ep.CreationTime = item.CreationTime;
+                    await _rolePermissionRepository.Add(ep);
                     count++;
                 }
                 _unitOfWork.CommitTran();

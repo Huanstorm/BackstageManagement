@@ -81,9 +81,10 @@ namespace BackstageManagement.Controllers
             if (IsLogin() && !string.IsNullOrEmpty(this.LoginUser.LoginName))
             {
                 StringBuilder sb = new StringBuilder();
-                var list =await _rolePermissionServices.QueryByRoleId(LoginUser.RoleId.Value);
-                list = list.Where(c => c.Permission != null&&c.Permission.Type==PermissionType.Menu).ToList();
-                if (list != null)
+                var list =await _rolePermissionServices.QueryByRoleId(LoginUser.RoleId.HasValue?LoginUser.RoleId.Value:0);
+                list = list.Where(c => c.Permission != null&&c.Permission.Type==PermissionType.Menu
+                &&c.Role!=null&&!c.Role.IsDeleted&&c.Role.IsEnabled).ToList();
+                if (list != null&&list.Count>0)
                 {
                     foreach (var parent in list.Where(a => a.Permission.ParentId == null || a.Permission.ParentId == 0))
                     {

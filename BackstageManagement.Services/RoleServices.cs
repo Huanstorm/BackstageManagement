@@ -16,5 +16,22 @@ namespace BackstageManagement.Services
             _roleRepository = roleRepository;
             BaseDal = _roleRepository;
         }
+
+        public async Task<int> AddRole(RoleEntity entity)
+        {
+            try
+            {
+                var role = await _roleRepository.GetSingle(c=>c.Name==entity.Name);
+                if (role!=null)
+                {
+                    return -1;
+                }
+                return await _roleRepository.Add(entity);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }

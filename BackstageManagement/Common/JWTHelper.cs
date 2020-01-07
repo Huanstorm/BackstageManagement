@@ -51,7 +51,7 @@ namespace BackstageManagement
                 IBase64UrlEncoder urlEncoder = new JwtBase64UrlEncoder();
                 IJwtDecoder decoder = new JwtDecoder(serializer, validator, urlEncoder);
                 var entity = decoder.DecodeToObject<UserInfo>(token, secret, true);
-                return entity == null || string.IsNullOrEmpty(entity.LoginName) || string.IsNullOrEmpty(entity.RealName) || Common.CommonHelper.GetTimeStamp() > entity.exp ? null : new SystemUserEntity().UpdateInfoByClass<SystemUserEntity, UserInfo>(entity);
+                return entity == null || entity.Id ==0|| string.IsNullOrEmpty(entity.LoginName) || string.IsNullOrEmpty(entity.RealName) || Common.CommonHelper.GetTimeStamp() > entity.exp ? null : new SystemUserEntity().UpdateInfoByClass<SystemUserEntity, UserInfo>(entity);
             }
             catch (Exception ex)
             {
@@ -63,6 +63,7 @@ namespace BackstageManagement
 
     public class UserInfo
     {
+        public int Id { get; set; }
         /// <summary>
         /// 工号
         /// </summary>

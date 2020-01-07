@@ -78,5 +78,9 @@ namespace BackstageManagement
             return Expression.Lambda<Func<T, bool>>(Expression.And(expOne.Body,
                 invokedExpression), expOne.Parameters);
         }
+
+        public static IQueryable<T> WhereIF<T>(this IQueryable<T> source, bool condition, Expression<Func<T, bool>> expression) {
+            return condition ? source.Where(expression) : source;
+        }
     }
 }
