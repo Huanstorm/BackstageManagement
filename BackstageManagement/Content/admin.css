@@ -10,4 +10,9 @@
 .layui-nav-tree .layui-nav-child dd.layui-this, .layui-nav-tree .layui-nav-child dd.layui-this a, .layui-nav-tree .layui-this, .layui-nav-tree .layui-this > a, .layui-nav-tree .layui-this > a:hover {
     background-color: #AA3130 !important;
 }
+.layui-card-header .layui-button-tips {
+    position: absolute;
+    right: 15px;
+    top: 6px;
+}
 

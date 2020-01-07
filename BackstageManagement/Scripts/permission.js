@@ -14,6 +14,7 @@
             { field: 'Name', title: '菜单名称' },
             { field: 'Id', title: 'ID', sort: false, hide: true },
             { field: 'ParentName', title: '父级菜单', sort: false },
+            { field: 'Icon', title: 'Icon', sort: false },
             { field: 'Url', title: '菜单地址', sort: false },
             { field: 'Remark', title: '备注', sort: false },
             { field: '', title: '类型', templet:'#typeTpl', sort: false },
@@ -82,6 +83,7 @@
                                 $("#url").val(data.Url);
                                 $("#parentName").val(data.ParentId);
                                 $("#remark").val(data.Remark);
+                                $("#icon").val(data.Icon);
                             }
                             else {
                                 layer.close(temindex);
@@ -99,6 +101,7 @@
                         var permissionUrl = $("#url").val();
                         var parentId = $("#parentName").val();
                         var type = $("input[name='type']:checked").val();
+                        var icon = $("#icon").val();
                         var remark = $("#remark").val();
                         var id = data.Id;
                         var json = {};
@@ -106,6 +109,7 @@
                         json.url = permissionUrl;
                         json.parentId = parentId;
                         json.type = type;
+                        json.icon = icon;
                         json.remark = remark;
                         json.id = id;
                         $.ajax({
@@ -173,12 +177,14 @@
                     var permissionUrl = $("#url").val();
                     var parentId = $("#parentName").val();
                     var type = $("input[name='type']:checked").val();
+                    var icon = $("#icon").val();
                     var remark = $("#remark").val();
                     var json = {};
                     json.name = permissionName;
                     json.url = permissionUrl;
                     json.parentId = parentId;
                     json.type = type;
+                    json.icon = icon;
                     json.remark = remark;
                     $.ajax({
                         url: '/Permission/AddPermissionInfo',

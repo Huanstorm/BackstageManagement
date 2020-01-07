@@ -105,12 +105,12 @@ namespace BackstageManagement.Controllers
                             {
                                 exists = true;
                             }
-                            sbChild.AppendFormat("<dd {0}><a href=\"{1}\">{2}</a></dd>", flag ? "class=\"layui-this\"" : "", string.IsNullOrEmpty(child.Permission.Url) ? "javascript:void(0)" : child.Permission.Url, child.Permission.Name);
+                            sbChild.AppendFormat("<dd {0}><a href=\"{1}\">&nbsp&nbsp{2}</a></dd>", flag ? "class=\"layui-this\"" : "", string.IsNullOrEmpty(child.Permission.Url) ? "javascript:void(0)" : child.Permission.Url, child.Permission.Name);
                         }
                         sbChild.AppendFormat("</dl>");
 
                         sb.AppendFormat("<li class=\"layui-nav-item {0}\">", exists ? "layui-nav-itemed" : (parentFlag ? "layui-this" : ""));
-                        sb.AppendFormat("<a href=\"{0}\">{1}</a>", childCount != 0 ? "javascript:void(0);" : parent.Permission.Url, parent.Permission.Name);
+                        sb.AppendFormat("<a class='layui-icon {0}' href=\"{1}\">&nbsp&nbsp{2}</a>",parent.Permission.Icon, childCount != 0 ? "javascript:void(0);" : parent.Permission.Url, parent.Permission.Name);
                         sb.Append(childCount != 0 ? sbChild.ToString() : "");
                         sb.AppendFormat("</li>");
                     }
