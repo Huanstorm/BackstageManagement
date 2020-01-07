@@ -69,9 +69,11 @@ namespace BackstageManagement.Controllers
                 //    var user =await _employeeServices.QueryById(item.UserId);
                 //    item.LoginName = user?.LoginName;
                 //}
-                var expressionable = SqlSugar.Expressionable.Create<LogEntity>();
+                var startDate = Convert.ToDateTime(daterange.Split('~')[0].Trim());
+                var endDate = Convert.ToDateTime(daterange.Split('~')[1].Trim()).AddDays(1);
+                var expressionable = SqlSugar.Expressionable.Create<LogEntity>();             
                 expressionable.AndIF(logtype != null, c => c.LogType == (LogType)logtype)
-                    .AndIF(!string.IsNullOrEmpty(daterange), c => c.CreationTime >= Convert.ToDateTime(daterange.Split('~')[0].Trim()) && c.CreationTime <= Convert.ToDateTime(daterange.Split('~')[1].Trim()).AddDays(1))
+                    .AndIF(!string.IsNullOrEmpty(daterange), c => c.CreationTime >= startDate && c.CreationTime <= startDate)
                     .AndIF(!string.IsNullOrEmpty(condition), c => c.LogFunction.Contains(condition) || c.LogContent.Contains(condition));
                 var logs = await _logServices.Query(expressionable.ToExpression()).ConfigureAwait(false);
                 logs = logs.OrderByDescending(c => c.CreationTime).ToList();
