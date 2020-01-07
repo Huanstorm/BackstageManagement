@@ -43,29 +43,34 @@ namespace BackstageManagement.Controllers
             try
             {
 
-                var expressionable = Common.ExpressionHelper.Expressionable<LogEntity>();
+                Expression<Func<LogEntity, bool>> pre = Common.ExpressionHelper.True<LogEntity>();
+                //List<LogEntity> logs =await _logServices.GetAll().ConfigureAwait(false);
                 if (logtype != null)
                 {
-                    expressionable.And(c => c.LogType == (LogType)logtype);
+                    //logs = logs.Where(c => c.LogType == (LogType)logtype).ToList();
+                    pre = pre.And(s => s.LogType == (LogType)logtype);
                 }
                 if (!string.IsNullOrEmpty(daterange))
                 {
                     var startDate = Convert.ToDateTime(daterange.Split('~')[0].Trim());
-                    var endDate = Convert.ToDateTime(daterange.Split('~')[1].Trim()).AddDays(1);         
-                    expressionable.And(c => c.CreationTime >= startDate && c.CreationTime <= endDate);
+                    var endDate = Convert.ToDateTime(daterange.Split('~')[1].Trim()).AddDays(1);
+                    //logs = logs.Where(c => c.CreationTime >= startDate && c.CreationTime <= endDate).ToList();
+                    pre = pre.And(c => c.CreationTime >= startDate && c.CreationTime <= endDate);
+
                 }
                 if (!string.IsNullOrEmpty(condition))
                 {
-                    expressionable.And(c => c.LogFunction.Contains(condition) || c.LogContent.Contains(condition));
-                }             
-                var logs = await _logServices.Query(expressionable.ToExpression()).ConfigureAwait(false);
-                logs = logs.OrderByDescending(c => c.CreationTime).Skip((page - 1) * limit).Take(limit).ToList();
+                    //logs = logs.Where(c => c.LogFunction.Contains(condition) || c.LogContent.Contains(condition)).ToList();
+                    pre = pre.And(c => c.LogFunction.Contains(condition) || c.LogContent.Contains(condition));
+                }
+                //logs = logs.OrderByDescending(c => c.CreationTime).ToList();
+                var logs = await _logServices.Query(pre).ConfigureAwait(false);
                 foreach (var item in logs)
                 {
-                    var user = await _employeeServices.QueryById(item.UserId).ConfigureAwait(false);
+                    var user =await _employeeServices.QueryById(item.UserId);
                     item.LoginName = user.LoginName;
                 }
-                result.data = logs;
+                result.data = logs.Skip((page - 1) * limit).Take(limit).ToList();
                 result.count = logs.Count;
             }
             catch (Exception ex)

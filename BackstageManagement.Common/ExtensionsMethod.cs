@@ -1,5 +1,4 @@
-﻿using SqlSugar;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
@@ -53,15 +52,15 @@ namespace BackstageManagement
         /// <param name="expOne"></param>
         /// <param name="expTwo"></param>
         /// <returns></returns>
-        //public static Expression<Func<T, bool>> Or<T>(this Expression<Func<T, bool>> expOne,
-        // Expression<Func<T, bool>> expTwo)
-        //{
-        //    var invokedExpression = Expression.Invoke(expTwo, expOne.Parameters
-        //        .Cast<Expression>());
+        public static Expression<Func<T, bool>> Or<T>(this Expression<Func<T, bool>> expOne,
+         Expression<Func<T, bool>> expTwo)
+        {
+            var invokedExpression = Expression.Invoke(expTwo, expOne.Parameters
+                .Cast<Expression>());
 
-        //    return Expression.Lambda<Func<T, bool>>(Expression.Or(expOne.Body, invokedExpression),
-        //        expOne.Parameters);
-        //}
+            return Expression.Lambda<Func<T, bool>>(Expression.Or(expOne.Body, invokedExpression),
+                expOne.Parameters);
+        }
 
         /// <summary>
         /// And联合两个表达式
@@ -70,15 +69,14 @@ namespace BackstageManagement
         /// <param name="expOne"></param>
         /// <param name="expTwo"></param>
         /// <returns></returns>
-        //public static Expression<Func<T, bool>> And<T>(this Expression<Func<T, bool>> expOne,
-        //    Expression<Func<T, bool>> expTwo)
-        //{
-        //    var invokedExpression = Expression.Invoke(expTwo, expOne.Parameters
-        //        .Cast<Expression>());
+        public static Expression<Func<T, bool>> And<T>(this Expression<Func<T, bool>> expOne,
+            Expression<Func<T, bool>> expTwo)
+        {
+            var invokedExpression = Expression.Invoke(expTwo, expOne.Parameters
+                .Cast<Expression>());
 
-        //    return Expression.Lambda<Func<T, bool>>(Expression.And(expOne.Body,
-        //        invokedExpression), expOne.Parameters);
-        //}
-
+            return Expression.Lambda<Func<T, bool>>(Expression.And(expOne.Body,
+                invokedExpression), expOne.Parameters);
+        }
     }
 }
