@@ -52,5 +52,17 @@ namespace BackstageManagement.Services
                 //忽略异常
             }
         }
+
+        public async Task<List<LogEntity>> QueryLogs(int? logType, DateTime startDate, DateTime endDate, string condition)
+        {
+            try
+            {
+                return await _logRepository.QueryLogs(logType,startDate,endDate,condition);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }
