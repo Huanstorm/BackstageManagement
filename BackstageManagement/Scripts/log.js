@@ -29,8 +29,10 @@
             { field: '', type: 'numbers', sort: false },
             { field: 'LogTypeString', title: '日志类型', templet: '#buttonTpl', sort: false },
             { field: 'LoginName', title: '登录名', sort: false },
+            { field: 'Ip', title: 'IP地址', sort: false },
+            { field: 'CityName', title: '城市地址', sort: false },
             { field: 'LogFunction', title: '日志功能', sort: false },
-            { field: 'LogContent', title: '日志内容', sort: false },
+            { field: 'LogContent', title: '日志内容', sort: false },          
             { field: 'CreationTimeString', title: '创建时间', sort: true },
             { field: '', title: '操作', templet: '#operationTpl' }
         ]],
@@ -52,10 +54,12 @@
                 content: $('#details').html(),
                 success: function (layero, index) {
                     $("#logTypeString").val(data.LogTypeString);
-                    $("#loginNo").val(data.LoginNo);
+                    $("#loginName").val(data.LoginName);
                     $("#logFunction").val(data.LogFunction);
                     $("#creationTimeString").val(data.CreationTimeString);
                     $("#logContent").val(data.LogContent);
+                    $("#cityName").val(data.CityName);
+                    $("#ip").val(data.Ip);
                 }
             });
         }

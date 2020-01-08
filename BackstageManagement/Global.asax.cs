@@ -41,12 +41,7 @@ namespace BackstageManagement
 
                 sqlSugarClient.Aop.OnError = (ex) =>
                 {
-                    sqlSugarClient.Ado.ExecuteCommand("insert into(execsql, parameters, createtime) values(@execsql, @parameters, @createtime)",
-                        new SugarParameter[] {
-                            new SugarParameter("@execsql",ex.Sql),
-                            new SugarParameter("@parameters",Newtonsoft.Json.JsonConvert.SerializeObject(ex.Parametres)),
-                            new SugarParameter("@createtime",DateTime.Now),
-                        });
+                    //这边不能记录数据库，异常没抛
                 };
                 return sqlSugarClient;
             });

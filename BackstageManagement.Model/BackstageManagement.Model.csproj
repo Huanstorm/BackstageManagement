@@ -58,6 +58,7 @@
     <Compile Include="CommonEnum.cs" />
     <Compile Include="Models\PermissionEntity.cs" />
     <Compile Include="Models\RootEntity.cs" />
+    <Compile Include="RemoteResponse.cs" />
     <Compile Include="TreeEntity.cs" />
     <Compile Include="UploadResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

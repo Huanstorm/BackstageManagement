@@ -46,6 +46,16 @@ namespace BackstageManagement.Model.Models
         /// 创建时间
         /// </summary>
         public DateTime CreationTime { get; set; } = DateTime.Now;
+        /// <summary>
+        /// Ip地址
+        /// </summary>
+        [SugarColumn(Length =16,ColumnDescription ="Ip地址")]
+        public string Ip { get; set; }
+        /// <summary>
+        /// 城市名称
+        /// </summary>
+        [SugarColumn(Length = 50, ColumnDescription = "城市地址")]
+        public string CityName { get; set; }
         [SugarColumn(IsIgnore = true)]
         public string CreationTimeString { get { return CreationTime.ToString("yyyy-MM-dd HH:mm"); } }
     }

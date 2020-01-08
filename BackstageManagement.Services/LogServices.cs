@@ -21,12 +21,15 @@ namespace BackstageManagement.Services
         {
             try
             {
+                var response = await Common.CommonHelper.GetSouhuIpResponse();            
                 LogEntity entity = new LogEntity();
                 entity.LogType = LogType.系统日志;
                 entity.UserId = loginId;
                 entity.CreationTime = DateTime.Now;
                 entity.LogFunction = function;
                 entity.LogContent = content;
+                entity.Ip = response?.Cip + "";
+                entity.CityName = response?.CName + "";
                 await _logRepository.Add(entity);
             }
             catch (Exception ex)

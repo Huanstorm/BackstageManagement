@@ -51,6 +51,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\BackstageManagement.Common\BackstageManagement.Common.csproj">
+      <Project>{d6a94d12-c904-4612-8c31-5eb338259032}</Project>
+      <Name>BackstageManagement.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\BackstageManagement.IRepository\BackstageManagement.IRepository.csproj">
       <Project>{a6289f2d-686c-4bab-8f2a-62616ad8f8da}</Project>
       <Name>BackstageManagement.IRepository</Name>
@@ -67,6 +71,9 @@
       <Project>{8605494b-0900-46f1-a9cd-a2afb0622624}</Project>
       <Name>BackstageManagement.Repository</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
