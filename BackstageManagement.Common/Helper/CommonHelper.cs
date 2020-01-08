@@ -12,7 +12,7 @@ namespace BackstageManagement.Common
 {
     public class CommonHelper
     {
-        private static string sh_ipurl = "http://pv.sohu.com/cityjson?ie=utf-8";
+        private static string tb_ipurl = "http://ip.taobao.com/service/getIpInfo.php?ip=";
         /// <summary>
         /// 获取时间戳
         /// </summary>
@@ -56,12 +56,13 @@ namespace BackstageManagement.Common
         /// 获取搜狐的接口返回值
         /// </summary>
         /// <returns></returns>
-        public static async Task<SouhuIpResponse> GetSouhuIpResponse()
+        public static async Task<TaobaoDetial> GetSouhuIpResponse()
         {
             try
             {
-                var str = await GetStrByUrl(sh_ipurl);
-                return JsonConvert.DeserializeObject<SouhuIpResponse>(str.Split('=')[1].TrimEnd(';'));
+                var str = await GetStrByUrl(tb_ipurl + GetIp());
+                var response = JsonConvert.DeserializeObject<TaobaoIpResponse>(str);
+                return response.Code == "0" ? response.Data : null;
             }
             catch (Exception ex)
             {
