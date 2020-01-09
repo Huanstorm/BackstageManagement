@@ -40,7 +40,7 @@ namespace BackstageManagement
             {
                 var proOne = prosOne.First(c => c.Name == str);
                 var proTwo = prosTwo.First(c => c.Name == str);
-                if (proOne.CanWrite) proOne.SetValue(tOne, proTwo.GetValue(tTwo), null);
+                if (proOne.CanWrite && proOne.PropertyType == proTwo.PropertyType) proOne.SetValue(tOne, proTwo.GetValue(tTwo), null);
             }
             return tOne;
         }
