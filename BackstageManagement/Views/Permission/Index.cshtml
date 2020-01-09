@@ -33,6 +33,11 @@
     <script type="text/html" id="typeTpl">
         <input type="button" class="layui-btn layui-btn-xs {{d.Type==1? 'layui-btn-normal':'layui-btn-warm'}}" value="{{d.Type==1?"菜单":"按钮"}}" />
     </script>
+    <script type="text/html" id="iconTpl">
+        <span class="layui-icon {{d.Icon}}"></span>
+        <span>{{d.Icon==null?"":d.Icon}}</span>
+
+    </script>
     <script type="text/html" id="permission">
         <div style="margin:15px 25px 0px 0px">
             <form class="layui-form">

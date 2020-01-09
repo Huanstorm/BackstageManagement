@@ -14,7 +14,7 @@
             { field: 'Name', title: '菜单名称' },
             { field: 'Id', title: 'ID', sort: false, hide: true },
             { field: 'ParentName', title: '父级菜单', sort: false },
-            { field: 'Icon', title: 'Icon', sort: false },
+            { field: 'Icon', title: 'Icon',templet:'#iconTpl', sort: false },
             { field: 'Url', title: '菜单地址', sort: false },
             { field: 'Remark', title: '备注', sort: false },
             { field: '', title: '类型', templet:'#typeTpl', sort: false },
