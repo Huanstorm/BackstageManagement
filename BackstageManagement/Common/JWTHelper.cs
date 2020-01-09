@@ -19,7 +19,7 @@ namespace BackstageManagement
         /// </summary>
         /// <param name="payload">不敏感的用户数据</param>
         /// <returns></returns>
-        public static string SetJwtEncode(SystemUserEntity entity, int exp = 2 * 60 * 60)
+        public static string SetJwtEncode(SystemUserEntity entity, int exp = 30 * 60)
         {
             IJwtAlgorithm algorithm = new HMACSHA256Algorithm();
             IJsonSerializer serializer = new JsonNetSerializer();
@@ -31,7 +31,7 @@ namespace BackstageManagement
             //    ////这验证十秒比较困难，JWT有缓冲时间，时间长点就可以验证，所以这边直接使用自己时间校验
             //    { "exp",Common.CommonHelper.GetTimeStamp()+10}
             //};
-            payload.exp = Common.CommonHelper.GetTimeStamp() + exp;      
+            payload.exp = Common.CommonHelper.GetTimeStamp() + exp;
             return encoder.Encode(payload, secret);
         }
 
