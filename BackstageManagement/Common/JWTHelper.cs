@@ -19,7 +19,7 @@ namespace BackstageManagement
         /// </summary>
         /// <param name="payload">不敏感的用户数据</param>
         /// <returns></returns>
-        public static string SetJwtEncode(SystemUserEntity entity, int exp = 2 * 60 * 60 * 1000)
+        public static string SetJwtEncode(SystemUserEntity entity, int exp = 2 * 60 * 60)
         {
             IJwtAlgorithm algorithm = new HMACSHA256Algorithm();
             IJsonSerializer serializer = new JsonNetSerializer();
