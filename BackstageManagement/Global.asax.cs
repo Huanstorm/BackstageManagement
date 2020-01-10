@@ -12,6 +12,7 @@ using Autofac.Integration.Mvc;
 using SqlSugar;
 using System.Configuration;
 using BackstageManagement.Model.Context;
+using BackstageManagement.Common;
 
 namespace BackstageManagement
 {
@@ -39,9 +40,24 @@ namespace BackstageManagement
                     IsAutoCloseConnection = true,
                 });
 
+                sqlSugarClient.Aop.OnLogExecuting = (sql, pars) =>
+                {
+                   //LogHelper.WriteDebug($"OnLogExecuting sql:{sql} parameters:{Newtonsoft.Json.JsonConvert.SerializeObject(pars)}");
+                };
+
+                sqlSugarClient.Aop.OnExecutingChangeSql = (sql, pars) =>
+                {
+                    return new KeyValuePair<string, SugarParameter[]>(sql, pars);
+                };
+
+                sqlSugarClient.Aop.OnLogExecuted = (sql, pars) =>
+                {
+                    LogHelper.WriteDebug($"OnLogExecuted sql:{sql} parameters:{Newtonsoft.Json.JsonConvert.SerializeObject(pars)} time:{sqlSugarClient.Ado.SqlExecutionTime.TotalMilliseconds}ms");
+                };
+
                 sqlSugarClient.Aop.OnError = (ex) =>
                 {
-                    //这边不能记录数据库，异常没抛
+                    LogHelper.WriteError($"OnLogExecuted sql:{ex.Sql} parameters:{Newtonsoft.Json.JsonConvert.SerializeObject(ex.Parametres)} time{sqlSugarClient.Ado.SqlExecutionTime.TotalMilliseconds}ms", ex);
                 };
                 return sqlSugarClient;
             });
@@ -55,10 +71,12 @@ namespace BackstageManagement
 
             var container = builder.Build();
             DependencyResolver.SetResolver(new AutofacDependencyResolver(container));
+      
+            LogHelper.InitLog4Net(AppDomain.CurrentDomain.BaseDirectory + "log4net.config");
         }
         protected void Application_Error()
-        {
-
+        {            
+            LogHelper.WriteFatal("Application_Error", Server.GetLastError());
         }
 
     }
