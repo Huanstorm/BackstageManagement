@@ -57,7 +57,7 @@ namespace BackstageManagement
 
                 sqlSugarClient.Aop.OnError = (ex) =>
                 {
-                    LogHelper.WriteError($"OnLogExecuted sql:{ex.Sql} parameters:{Newtonsoft.Json.JsonConvert.SerializeObject(ex.Parametres)} time:{sqlSugarClient.Ado.SqlExecutionTime.TotalMilliseconds}ms", ex);
+                    LogHelper.WriteError($"OnError sql:{ex.Sql} parameters:{Newtonsoft.Json.JsonConvert.SerializeObject(ex.Parametres)} time:{sqlSugarClient.Ado.SqlExecutionTime.TotalMilliseconds}ms", ex);
                 };
                 return sqlSugarClient;
             });
